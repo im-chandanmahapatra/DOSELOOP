@@ -141,9 +141,12 @@ function Circle() {
             </DialogTrigger>
             <DialogContent className="rounded-3xl border-border/80 bg-card p-6 sm:p-8 shadow-float">
               <DialogHeader>
-                <DialogTitle className="font-serif text-2xl font-bold">Invite to Care Circle</DialogTitle>
+                <DialogTitle className="font-serif text-2xl font-bold">
+                  Invite to Care Circle
+                </DialogTitle>
                 <DialogDescription className="text-xs sm:text-sm leading-relaxed">
-                  They will receive an invitation to join your circle. You decide exactly what health records are shared.
+                  They will receive an invitation to join your circle. You decide exactly what
+                  health records are shared.
                 </DialogDescription>
               </DialogHeader>
               <form
@@ -177,10 +180,20 @@ function Circle() {
                   />
                 </div>
                 <DialogFooter className="pt-3">
-                  <Button type="button" variant="ghost" className="rounded-xl" onClick={() => setOpen(false)}>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="rounded-xl"
+                    onClick={() => setOpen(false)}
+                  >
                     Cancel
                   </Button>
-                  <Button type="submit" variant="wine" className="rounded-xl" disabled={inviteMutation.isPending}>
+                  <Button
+                    type="submit"
+                    variant="wine"
+                    className="rounded-xl"
+                    disabled={inviteMutation.isPending}
+                  >
                     <Mail className="size-4 mr-2" />{" "}
                     {inviteMutation.isPending ? "Sending Invite…" : "Send Care Invitation"}
                   </Button>
@@ -198,9 +211,15 @@ function Circle() {
           </div>
           <h3 className="font-serif text-xl font-bold text-foreground">No Family Members Yet</h3>
           <p className="mt-1 max-w-md text-xs sm:text-sm text-muted-foreground leading-relaxed">
-            Invite family members or caregivers to form your circle. They will receive calm daily summaries so they know you are doing well without constant check-in calls.
+            Invite family members or caregivers to form your circle. They will receive calm daily
+            summaries so they know you are doing well without constant check-in calls.
           </p>
-          <Button variant="wine" size="sm" className="mt-4 rounded-xl" onClick={() => setOpen(true)}>
+          <Button
+            variant="wine"
+            size="sm"
+            className="mt-4 rounded-xl"
+            onClick={() => setOpen(true)}
+          >
             <UserPlus className="size-3.5 mr-1.5" /> Invite First Member
           </Button>
         </div>
@@ -218,7 +237,10 @@ function Circle() {
               sharesMedication: boolean;
               sharesWellness: boolean;
             }) => {
-              const s = statusText[m.status] ?? { tone: "quiet" as StatusTone, label: "Quietly Fine" };
+              const s = statusText[m.status] ?? {
+                tone: "quiet" as StatusTone,
+                label: "Quietly Fine",
+              };
               return (
                 <article
                   key={m.id}
@@ -236,12 +258,17 @@ function Circle() {
                         <div>
                           <div className="flex items-center gap-2">
                             <p className="font-serif font-bold text-lg text-foreground">{m.name}</p>
-                            <Badge variant="outline" className="text-[10px] py-0 px-2 border-border/80 font-bold bg-secondary/50">
+                            <Badge
+                              variant="outline"
+                              className="text-[10px] py-0 px-2 border-border/80 font-bold bg-secondary/50"
+                            >
                               {m.relation}
                             </Badge>
                           </div>
                           <p className="text-xs text-muted-foreground mt-0.5">
-                            {m.role === "OWNER" || m.role === "owner" ? "Primary Care Recipient" : "Active Caregiver"}
+                            {m.role === "OWNER" || m.role === "owner"
+                              ? "Primary Care Recipient"
+                              : "Active Caregiver"}
                           </p>
                         </div>
                       </div>
@@ -250,9 +277,13 @@ function Circle() {
 
                     {/* Status Dispatch Bar */}
                     <div className="mt-4 rounded-2xl bg-secondary/40 p-3.5 text-xs text-foreground border border-border/50">
-                      <p className="font-semibold">{m.statusLine || "All scheduled daily doses verified on time. Hydration consistent."}</p>
+                      <p className="font-semibold">
+                        {m.statusLine ||
+                          "All scheduled daily doses verified on time. Hydration consistent."}
+                      </p>
                       <p className="mt-1 flex items-center gap-1 text-[11px] text-muted-foreground">
-                        <Clock className="size-3" /> Synced 15 mins ago · Reassurance broadcast active
+                        <Clock className="size-3" /> Synced 15 mins ago · Reassurance broadcast
+                        active
                       </p>
                     </div>
 
@@ -260,7 +291,10 @@ function Circle() {
                     <div className="mt-5 space-y-3 rounded-2xl border border-border/70 bg-background/60 p-4">
                       <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label htmlFor={`meds-${m.id}`} className="cursor-pointer text-xs font-bold text-foreground">
+                          <Label
+                            htmlFor={`meds-${m.id}`}
+                            className="cursor-pointer text-xs font-bold text-foreground"
+                          >
                             Share Medication Adherence
                           </Label>
                           <p className="text-[11px] text-muted-foreground">
@@ -277,7 +311,10 @@ function Circle() {
                       </div>
                       <div className="border-t border-border/50 pt-2.5 flex items-center justify-between">
                         <div className="space-y-0.5">
-                          <Label htmlFor={`well-${m.id}`} className="cursor-pointer text-xs font-bold text-foreground">
+                          <Label
+                            htmlFor={`well-${m.id}`}
+                            className="cursor-pointer text-xs font-bold text-foreground"
+                          >
                             Share Wellness & Hydration
                           </Label>
                           <p className="text-[11px] text-muted-foreground">
@@ -318,9 +355,12 @@ function Circle() {
                       </AlertDialogTrigger>
                       <AlertDialogContent className="rounded-3xl border-border/80 bg-card p-6 shadow-float">
                         <AlertDialogHeader>
-                          <AlertDialogTitle className="font-serif text-xl font-bold">Remove {m.name}?</AlertDialogTitle>
+                          <AlertDialogTitle className="font-serif text-xl font-bold">
+                            Remove {m.name}?
+                          </AlertDialogTitle>
                           <AlertDialogDescription className="text-xs sm:text-sm">
-                            They will immediately lose access to your medication schedule and daily updates. You can re-invite them at any time.
+                            They will immediately lose access to your medication schedule and daily
+                            updates. You can re-invite them at any time.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter className="pt-2">
@@ -347,9 +387,13 @@ function Circle() {
         <div className="flex items-start gap-3.5">
           <ShieldCheck className="mt-0.5 size-6 shrink-0 text-primary" />
           <div className="space-y-1">
-            <p className="font-serif text-base font-bold text-foreground">Dignified Caregiver Architecture</p>
+            <p className="font-serif text-base font-bold text-foreground">
+              Dignified Caregiver Architecture
+            </p>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              DoseLoop operates on a principle of dignified privacy. Caregivers receive calm synthesized status indicators rather than minute-by-minute surveillance alerts, preserving patient autonomy while providing families with genuine peace of mind.
+              DoseLoop operates on a principle of dignified privacy. Caregivers receive calm
+              synthesized status indicators rather than minute-by-minute surveillance alerts,
+              preserving patient autonomy while providing families with genuine peace of mind.
             </p>
           </div>
         </div>

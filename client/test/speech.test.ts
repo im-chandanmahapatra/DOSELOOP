@@ -20,66 +20,65 @@ describe("Medical Phonetics & Abbreviation Expander", () => {
   it("expands standard metric dosage units accurately", () => {
     assert.equal(
       expandMedicalAbbreviations("Take 500mg with breakfast"),
-      "Take 500 milligrams with breakfast"
+      "Take 500 milligrams with breakfast",
     );
     assert.equal(
       expandMedicalAbbreviations("Administer 2.5mcg daily"),
-      "Administer 2.5 micrograms daily"
+      "Administer 2.5 micrograms daily",
     );
     assert.equal(
       expandMedicalAbbreviations("Measure 15ml of cough syrup"),
-      "Measure 15 milliliters of cough syrup"
+      "Measure 15 milliliters of cough syrup",
     );
     assert.equal(
       expandMedicalAbbreviations("Patient weight: 70kg"),
-      "Patient weight: 70 kilograms"
+      "Patient weight: 70 kilograms",
     );
   });
 
   it("expands Latin frequency shorthand to clear spoken English", () => {
     assert.equal(
       expandMedicalAbbreviations("Take 1 tab PO BID"),
-      "Take 1 tablets by mouth twice a day"
+      "Take 1 tablets by mouth twice a day",
     );
     assert.equal(
       expandMedicalAbbreviations("Take 2 caps TID with meals"),
-      "Take 2 capsules three times a day with meals"
+      "Take 2 capsules three times a day with meals",
     );
     assert.equal(
       expandMedicalAbbreviations("Metformin 850mg QD"),
-      "Metformin 850 milligrams once daily"
+      "Metformin 850 milligrams once daily",
     );
     assert.equal(
       expandMedicalAbbreviations("Ondansetron 4mg PRN for nausea"),
-      "Ondansetron 4 milligrams as needed for nausea"
+      "Ondansetron 4 milligrams as needed for nausea",
     );
   });
 
   it("expands hourly frequency intervals (q8h, q12h)", () => {
     assert.equal(
       expandMedicalAbbreviations("Take one tablet q8h"),
-      "Take one tablet every 8 hours"
+      "Take one tablet every 8 hours",
     );
     assert.equal(
       expandMedicalAbbreviations("Dose every q12h as directed"),
-      "Dose every every 12 hours as directed"
+      "Dose every every 12 hours as directed",
     );
   });
 
   it("expands administration routes and vitals", () => {
     assert.equal(
       expandMedicalAbbreviations("Monitor BP and HR daily"),
-      "Monitor blood pressure and heart rate daily"
+      "Monitor blood pressure and heart rate daily",
     );
     assert.equal(
       expandMedicalAbbreviations("Administer saline IV"),
-      "Administer saline intravenously"
+      "Administer saline intravenously",
     );
   });
 
   it("preserves critical clinical warnings and negation verbatim", () => {
-    const warning =
-      "WARNING: Do NOT take with grapefruit juice. May cause severe hypotension.";
+    const warning = "WARNING: Do NOT take with grapefruit juice. May cause severe hypotension.";
     const result = expandMedicalAbbreviations(warning);
 
     assert.ok(result.includes("Do NOT take with grapefruit juice"));
@@ -95,14 +94,10 @@ describe("Medical Phonetics & Abbreviation Expander", () => {
 
 describe("Markdown Sanitizer for Speech", () => {
   it("removes markdown formatting while preserving text content", () => {
-    const md =
-      "### Medication Advice\n\n**Metformin** is used to treat *type 2 diabetes*.";
+    const md = "### Medication Advice\n\n**Metformin** is used to treat *type 2 diabetes*.";
     const spoken = sanitizeForSpeech(md);
 
-    assert.equal(
-      spoken,
-      "Medication Advice. Metformin is used to treat type 2 diabetes."
-    );
+    assert.equal(spoken, "Medication Advice. Metformin is used to treat type 2 diabetes.");
   });
 
   it("converts bulleted and numbered lists into punctuated clauses for speech pauses", () => {
@@ -112,7 +107,7 @@ describe("Markdown Sanitizer for Speech", () => {
 
     assert.equal(
       spoken,
-      "Daily instructions: Take with morning meal. Drink plenty of water. Avoid alcohol."
+      "Daily instructions: Take with morning meal. Drink plenty of water. Avoid alcohol.",
     );
   });
 
@@ -123,7 +118,7 @@ describe("Markdown Sanitizer for Speech", () => {
 
     assert.equal(
       spoken,
-      "Always check with your pharmacist. Refer to DoseLoop Guide for Lisinopril details."
+      "Always check with your pharmacist. Refer to DoseLoop Guide for Lisinopril details.",
     );
   });
 
@@ -142,7 +137,8 @@ describe("Markdown Sanitizer for Speech", () => {
   });
 
   it("removes markdown images completely", () => {
-    const withImg = "Check your blood sugar ![glucometer](https://example.com/meter.png) twice daily.";
+    const withImg =
+      "Check your blood sugar ![glucometer](https://example.com/meter.png) twice daily.";
     const spoken = sanitizeForSpeech(withImg);
 
     assert.equal(spoken, "Check your blood sugar twice daily.");
@@ -173,7 +169,7 @@ describe("Sentence Chunking for Chromium 15-Second Bug Workaround", () => {
     for (const chunk of chunks) {
       assert.ok(
         chunk.length <= 150,
-        `Chunk exceeded safe limit: "${chunk}" (${chunk.length} chars)`
+        `Chunk exceeded safe limit: "${chunk}" (${chunk.length} chars)`,
       );
     }
 
@@ -215,7 +211,7 @@ describe("Browser Feature Detection & Recovery Logic", () => {
     };
     const hasChromeRecognition = Boolean(
       // @ts-expect-error Mocking window
-      mockChromeWin.SpeechRecognition || mockChromeWin.webkitSpeechRecognition
+      mockChromeWin.SpeechRecognition || mockChromeWin.webkitSpeechRecognition,
     );
     assert.equal(hasChromeRecognition, true);
 
@@ -223,7 +219,7 @@ describe("Browser Feature Detection & Recovery Logic", () => {
     const mockFirefoxWin = {};
     const hasFirefoxRecognition = Boolean(
       // @ts-expect-error Mocking window
-      mockFirefoxWin.SpeechRecognition || mockFirefoxWin.webkitSpeechRecognition
+      mockFirefoxWin.SpeechRecognition || mockFirefoxWin.webkitSpeechRecognition,
     );
     assert.equal(hasFirefoxRecognition, false);
   });
@@ -235,15 +231,13 @@ describe("Browser Feature Detection & Recovery Logic", () => {
     };
 
     const isSupported =
-      "speechSynthesis" in mockSupportedWin &&
-      "SpeechSynthesisUtterance" in mockSupportedWin;
+      "speechSynthesis" in mockSupportedWin && "SpeechSynthesisUtterance" in mockSupportedWin;
 
     assert.equal(isSupported, true);
 
     const mockUnsupportedWin = {};
     const isUnsupported =
-      "speechSynthesis" in mockUnsupportedWin &&
-      "SpeechSynthesisUtterance" in mockUnsupportedWin;
+      "speechSynthesis" in mockUnsupportedWin && "SpeechSynthesisUtterance" in mockUnsupportedWin;
 
     assert.equal(isUnsupported, false);
   });
@@ -252,12 +246,10 @@ describe("Browser Feature Detection & Recovery Logic", () => {
     const errorMap: Record<string, string> = {
       "not-allowed":
         "Microphone access was denied. Please allow microphone access in your browser settings.",
-      "service-not-allowed":
-        "Speech service is unavailable or disabled on this device.",
+      "service-not-allowed": "Speech service is unavailable or disabled on this device.",
       "no-speech": "No speech detected. Tap the microphone to try again.",
       network: "Speech recognition requires an active network connection.",
-      "audio-capture":
-        "No microphone was found or audio capture is in use by another app.",
+      "audio-capture": "No microphone was found or audio capture is in use by another app.",
     };
 
     assert.ok(errorMap["not-allowed"].includes("browser settings"));

@@ -191,7 +191,9 @@ function Dashboard() {
       <div className="flex min-h-[50vh] items-center justify-center">
         <Card variant="editorial" className="max-w-md p-8 text-center shadow-lift">
           <AlertCircle className="mx-auto size-9 text-destructive" />
-          <h2 className="mt-3 font-serif text-xl font-bold text-foreground">Couldn't load dashboard</h2>
+          <h2 className="mt-3 font-serif text-xl font-bold text-foreground">
+            Couldn't load dashboard
+          </h2>
           <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
             Please verify server connection and refresh.
           </p>
@@ -336,18 +338,27 @@ function Dashboard() {
                 </p>
                 <div className="mt-1 flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
-                    <Badge variant="outline" className="font-mono text-xs border-amber-500/30 bg-background/60">
+                    <Badge
+                      variant="outline"
+                      className="font-mono text-xs border-amber-500/30 bg-background/60"
+                    >
                       {nextDose.time}
                     </Badge>
                     <span className="text-xs text-muted-foreground">{nextDose.inLabel}</span>
                   </div>
-                  {todaysDoses.find((d: { medicationName: string; status: string }) => d.medicationName === nextDose.medicationName && d.status !== "taken") && (
+                  {todaysDoses.find(
+                    (d: { medicationName: string; status: string }) =>
+                      d.medicationName === nextDose.medicationName && d.status !== "taken",
+                  ) && (
                     <Button
                       size="sm"
                       variant="wine"
                       className="h-6 text-[10px] rounded-lg px-2"
                       onClick={() => {
-                        const target = todaysDoses.find((d: { medicationName: string }) => d.medicationName === nextDose.medicationName);
+                        const target = todaysDoses.find(
+                          (d: { medicationName: string }) =>
+                            d.medicationName === nextDose.medicationName,
+                        );
                         if (target) update(target.id, "taken");
                       }}
                     >
@@ -380,7 +391,8 @@ function Dashboard() {
           <div className="mt-3">
             <div className="flex items-baseline justify-between">
               <p className="font-numeric text-2xl font-bold tracking-tight text-foreground">
-                {waterAmount.toLocaleString()} <span className="text-xs font-normal text-muted-foreground">/ 2,000 ml</span>
+                {waterAmount.toLocaleString()}{" "}
+                <span className="text-xs font-normal text-muted-foreground">/ 2,000 ml</span>
               </p>
               <div className="flex gap-1">
                 <button
@@ -442,7 +454,8 @@ function Dashboard() {
         </div>
         <p className="mt-2.5 text-sm leading-relaxed text-foreground font-medium">
           You've logged {taken} of {total} doses so far — blood pressure regimens remain consistent.
-          Hydration is currently at {Math.round((waterAmount / 2000) * 100)}% of your target; a small 250ml glass of water now closes the gap comfortably.
+          Hydration is currently at {Math.round((waterAmount / 2000) * 100)}% of your target; a
+          small 250ml glass of water now closes the gap comfortably.
         </p>
       </section>
 
@@ -452,7 +465,9 @@ function Dashboard() {
         <section className="space-y-4">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 className="font-serif text-xl font-bold text-foreground">Today's Regimen Schedule</h2>
+              <h2 className="font-serif text-xl font-bold text-foreground">
+                Today's Regimen Schedule
+              </h2>
               <p className="text-xs text-muted-foreground">
                 Tap to record dose status or snooze for later reminder
               </p>
@@ -531,8 +546,8 @@ function Dashboard() {
                         isDone
                           ? "border-emerald-500/30 bg-emerald-500/[0.04]"
                           : isDue
-                          ? "border-amber-500/50 bg-amber-500/[0.05]"
-                          : "border-border/80 bg-card",
+                            ? "border-amber-500/50 bg-amber-500/[0.05]"
+                            : "border-border/80 bg-card",
                       )}
                     >
                       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -544,8 +559,8 @@ function Dashboard() {
                               isDone
                                 ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300"
                                 : isDue
-                                ? "bg-amber-500/20 text-amber-800 dark:text-amber-300"
-                                : "bg-muted text-foreground",
+                                  ? "bg-amber-500/20 text-amber-800 dark:text-amber-300"
+                                  : "bg-muted text-foreground",
                             )}
                           >
                             {dose.time}
@@ -652,7 +667,9 @@ function Dashboard() {
           <Card variant="editorial" className="p-5 shadow-soft">
             <div className="flex items-center justify-between border-b border-border/60 pb-3">
               <div>
-                <h3 className="font-serif text-base font-bold text-foreground">Family Care Pulse</h3>
+                <h3 className="font-serif text-base font-bold text-foreground">
+                  Family Care Pulse
+                </h3>
                 <p className="text-[11px] text-muted-foreground">Synchronized family reassurance</p>
               </div>
               <Link to="/circle" className="text-xs font-bold text-primary hover:underline">
@@ -680,7 +697,12 @@ function Dashboard() {
                           <span className="font-normal text-muted-foreground">· {m.relation}</span>
                         </p>
                         <div className="mt-0.5 flex items-center gap-2 text-[10px]">
-                          <span className={cn("rounded-md px-1.5 py-0.5 font-bold capitalize", medsTone[m.meds])}>
+                          <span
+                            className={cn(
+                              "rounded-md px-1.5 py-0.5 font-bold capitalize",
+                              medsTone[m.meds],
+                            )}
+                          >
                             {m.meds}
                           </span>
                           <span className="inline-flex items-center gap-1 text-sky-700 dark:text-sky-300 font-semibold">
@@ -713,7 +735,9 @@ function Dashboard() {
               </span>
               <div>
                 <h3 className="font-serif text-sm font-bold text-foreground">Emergency Hub</h3>
-                <p className="text-[11px] text-muted-foreground">Rapid-dispatch contacts & Medical ID</p>
+                <p className="text-[11px] text-muted-foreground">
+                  Rapid-dispatch contacts & Medical ID
+                </p>
               </div>
             </div>
 
@@ -734,10 +758,11 @@ function Dashboard() {
 
             <div className="mt-3 flex items-center gap-2">
               <a
-                href="tel:911"
+                href="tel:112"
+                aria-label="Call National Emergency 112"
                 className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-destructive px-3 py-2 text-xs font-bold text-white shadow-xs transition-transform active:scale-95 hover:bg-destructive/90"
               >
-                <Phone className="size-3.5" /> Dial 911 Direct
+                <Phone className="size-3.5" /> Call 112 (ERSS)
               </a>
               <Link
                 to="/emergency"

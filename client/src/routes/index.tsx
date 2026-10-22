@@ -97,9 +97,7 @@ function InteractiveHeroSimulator() {
   const pct = Math.round((takenCount / doses.length) * 100);
 
   const toggleDose = (id: number) => {
-    setDoses((prev) =>
-      prev.map((d) => (d.id === id ? { ...d, taken: !d.taken } : d)),
-    );
+    setDoses((prev) => prev.map((d) => (d.id === id ? { ...d, taken: !d.taken } : d)));
   };
 
   return (
@@ -257,7 +255,8 @@ function Landing() {
 
             <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl lg:leading-[1.08] font-serif">
               Calm family health,{" "}
-              <span className="text-primary italic font-serif">held together</span> with quiet precision.
+              <span className="text-primary italic font-serif">held together</span> with quiet
+              precision.
             </h1>
 
             <p className="max-w-xl text-base sm:text-lg leading-relaxed text-muted-foreground">
@@ -273,14 +272,22 @@ function Landing() {
                   <ArrowRight className="size-4 ml-1" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-2xl bg-card border-border/80">
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="rounded-2xl bg-card border-border/80"
+              >
                 <Link to="/dashboard">Explore interactive dashboard</Link>
               </Button>
             </div>
 
             <ul className="grid gap-2.5 pt-3">
               {principles.map((p) => (
-                <li key={p} className="flex items-center gap-2.5 text-xs sm:text-sm text-muted-foreground font-medium">
+                <li
+                  key={p}
+                  className="flex items-center gap-2.5 text-xs sm:text-sm text-muted-foreground font-medium"
+                >
                   <span className="grid size-5 place-items-center rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-400">
                     <Check className="size-3.5" />
                   </span>
@@ -307,13 +314,17 @@ function Landing() {
               Three Pillars of Dignified Care
             </h2>
             <p className="mt-2.5 text-sm sm:text-base text-muted-foreground leading-relaxed">
-              Designed specifically to replace stressful hospital portals and noisy reminder apps with serenity.
+              Designed specifically to replace stressful hospital portals and noisy reminder apps
+              with serenity.
             </p>
           </div>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-3">
             {/* Pillar 1: Rose Tinted */}
-            <Card variant="rose" className="p-7 flex flex-col justify-between shadow-soft hover:shadow-lift transition-all">
+            <Card
+              variant="rose"
+              className="p-7 flex flex-col justify-between shadow-soft hover:shadow-lift transition-all"
+            >
               <div>
                 <span className="grid size-12 place-items-center rounded-2xl bg-primary/15 text-primary">
                   <Bell className="size-6" />
@@ -322,7 +333,8 @@ function Landing() {
                   Zero Alarm Fatigue
                 </h3>
                 <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-muted-foreground">
-                  Gentle ambient notifications that respect human routines. No blaring klaxons, guilt-tripping popups, or punitive counters.
+                  Gentle ambient notifications that respect human routines. No blaring klaxons,
+                  guilt-tripping popups, or punitive counters.
                 </p>
               </div>
               <div className="mt-6 pt-4 border-t border-rose/30 text-xs font-bold text-primary">
@@ -331,7 +343,10 @@ function Landing() {
             </Card>
 
             {/* Pillar 2: Gold Tinted */}
-            <Card variant="gold" className="p-7 flex flex-col justify-between shadow-soft hover:shadow-lift transition-all">
+            <Card
+              variant="gold"
+              className="p-7 flex flex-col justify-between shadow-soft hover:shadow-lift transition-all"
+            >
               <div>
                 <span className="grid size-12 place-items-center rounded-2xl bg-amber-500/20 text-amber-800 dark:text-amber-300">
                   <Users className="size-6" />
@@ -340,7 +355,8 @@ function Landing() {
                   Reassurance Without Nagging
                 </h3>
                 <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-muted-foreground">
-                  Caregivers see high-level peace-of-mind states ('Dad is on track today') without invading personal medical records or triggering intrusive calls.
+                  Caregivers see high-level peace-of-mind states ('Dad is on track today') without
+                  invading personal medical records or triggering intrusive calls.
                 </p>
               </div>
               <div className="mt-6 pt-4 border-t border-gold/30 text-xs font-bold text-amber-900 dark:text-amber-200">
@@ -349,7 +365,10 @@ function Landing() {
             </Card>
 
             {/* Pillar 3: Sage Tinted */}
-            <Card variant="sage" className="p-7 flex flex-col justify-between shadow-soft hover:shadow-lift transition-all">
+            <Card
+              variant="sage"
+              className="p-7 flex flex-col justify-between shadow-soft hover:shadow-lift transition-all"
+            >
               <div>
                 <span className="grid size-12 place-items-center rounded-2xl bg-emerald-500/20 text-emerald-700 dark:text-emerald-400">
                   <ShieldCheck className="size-6" />
@@ -358,7 +377,8 @@ function Landing() {
                   Clinical Readiness & SOS
                 </h3>
                 <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-muted-foreground">
-                  Instant Emergency Medical ID with documented allergies, active prescriptions, and one-tap paramedic dispatch accessible even offline.
+                  Instant Emergency Medical ID with documented allergies, active prescriptions, and
+                  one-tap paramedic dispatch accessible even offline.
                 </p>
               </div>
               <div className="mt-6 pt-4 border-t border-sage/30 text-xs font-bold text-emerald-800 dark:text-emerald-300">
@@ -400,9 +420,9 @@ function Landing() {
                     A Family Circle, not surveillance
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    Invite trusted caregivers and family members with fine-grained visibility controls.
-                    Ananya sees that Dad took his morning medication without intruding on his medical logs.
-                    Consent is non-negotiable and revocable anytime.
+                    Invite trusted caregivers and family members with fine-grained visibility
+                    controls. Ananya sees that Dad took his morning medication without intruding on
+                    his medical logs. Consent is non-negotiable and revocable anytime.
                   </p>
                   <Button asChild variant="outline" size="sm" className="rounded-xl border-border">
                     <Link to="/circle">Learn about Circle permissions →</Link>
@@ -428,10 +448,7 @@ function Landing() {
             </Card>
 
             {/* Bento 2: Precision Timing */}
-            <Card
-              variant="editorial"
-              className="p-8 shadow-soft transition-all hover:shadow-lift"
-            >
+            <Card variant="editorial" className="p-8 shadow-soft transition-all hover:shadow-lift">
               <span className="grid size-12 place-items-center rounded-2xl bg-amber-500/15 text-amber-800 dark:text-amber-300">
                 <Pill className="size-6" />
               </span>
@@ -439,8 +456,8 @@ function Landing() {
                 Medications that never slip
               </h3>
               <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-muted-foreground">
-                Handle multi-dose schedules, complicated tapering, and automatic refill alerts. One-tap
-                logging from your phone, watch, or desktop.
+                Handle multi-dose schedules, complicated tapering, and automatic refill alerts.
+                One-tap logging from your phone, watch, or desktop.
               </p>
               <div className="mt-6 flex flex-wrap gap-2">
                 <span className="rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/25 text-xs px-2.5 py-1 font-bold">
@@ -456,10 +473,7 @@ function Landing() {
             </Card>
 
             {/* Bento 3: AI Assistant */}
-            <Card
-              variant="editorial"
-              className="p-8 shadow-soft transition-all hover:shadow-lift"
-            >
+            <Card variant="editorial" className="p-8 shadow-soft transition-all hover:shadow-lift">
               <span className="grid size-12 place-items-center rounded-2xl bg-primary/10 text-primary">
                 <Sparkles className="size-6" />
               </span>
@@ -467,8 +481,8 @@ function Landing() {
                 Pulse AI: Reassuring Companion
               </h3>
               <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-muted-foreground">
-                Powered by Groq's high-speed inference. Ask contextual questions like "Can I take Metformin
-                with food?" and receive clear, evidence-backed guidance.
+                Powered by Groq's high-speed inference. Ask contextual questions like "Can I take
+                Metformin with food?" and receive clear, evidence-backed guidance.
               </p>
               <div className="mt-6">
                 <AiBadge label="Clinical assistant mode" />
@@ -489,18 +503,24 @@ function Landing() {
                     Household wellness in one shared rhythm
                   </h3>
                   <p className="text-xs sm:text-sm leading-relaxed text-muted-foreground">
-                    Track hydration, mood, and sleep patterns together. When an elderly parent feels unwell,
-                    the family knows without intrusive interrogations.
+                    Track hydration, mood, and sleep patterns together. When an elderly parent feels
+                    unwell, the family knows without intrusive interrogations.
                   </p>
                 </div>
                 <div className="flex gap-4">
                   <div className="text-center rounded-2xl border border-border/80 bg-background/80 p-4 min-w-28 shadow-xs">
                     <p className="font-numeric text-2xl font-bold text-primary">2,250</p>
-                    <p className="text-xs text-muted-foreground mt-0.5 font-medium">ml Water Logged</p>
+                    <p className="text-xs text-muted-foreground mt-0.5 font-medium">
+                      ml Water Logged
+                    </p>
                   </div>
                   <div className="text-center rounded-2xl border border-border/80 bg-background/80 p-4 min-w-28 shadow-xs">
-                    <p className="font-numeric text-2xl font-bold text-emerald-600 dark:text-emerald-400">100%</p>
-                    <p className="text-xs text-muted-foreground mt-0.5 font-medium">Adherence Streak</p>
+                    <p className="font-numeric text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+                      100%
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5 font-medium">
+                      Adherence Streak
+                    </p>
                   </div>
                 </div>
               </div>
@@ -513,7 +533,9 @@ function Landing() {
       <section id="compare" className="border-b border-border/60 py-20 sm:py-28 bg-secondary/20">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="text-center max-w-2xl mx-auto">
-            <p className="text-xs font-bold uppercase tracking-wider text-primary">A Clear Choice</p>
+            <p className="text-xs font-bold uppercase tracking-wider text-primary">
+              A Clear Choice
+            </p>
             <h2 className="mt-2 font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               Why Families Choose DoseLoop
             </h2>
@@ -527,34 +549,52 @@ function Landing() {
               <thead>
                 <tr className="border-b border-border/80">
                   <th className="py-4 px-4 font-serif font-bold text-foreground">Core Dimension</th>
-                  <th className="py-4 px-4 font-bold text-primary bg-primary/5 rounded-t-2xl">DoseLoop 2.0</th>
-                  <th className="py-4 px-4 font-semibold text-muted-foreground">Hospital EHR Portals</th>
-                  <th className="py-4 px-4 font-semibold text-muted-foreground">Gamified Habit Apps</th>
+                  <th className="py-4 px-4 font-bold text-primary bg-primary/5 rounded-t-2xl">
+                    DoseLoop 2.0
+                  </th>
+                  <th className="py-4 px-4 font-semibold text-muted-foreground">
+                    Hospital EHR Portals
+                  </th>
+                  <th className="py-4 px-4 font-semibold text-muted-foreground">
+                    Gamified Habit Apps
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/60 text-xs sm:text-sm">
                 <tr>
                   <td className="py-3.5 px-4 font-semibold text-foreground">Caregiver Sync</td>
-                  <td className="py-3.5 px-4 font-bold text-primary bg-primary/5">Dignified Reassurance states</td>
+                  <td className="py-3.5 px-4 font-bold text-primary bg-primary/5">
+                    Dignified Reassurance states
+                  </td>
                   <td className="py-3.5 px-4 text-muted-foreground">None (patient-only login)</td>
                   <td className="py-3.5 px-4 text-muted-foreground">Overbearing surveillance</td>
                 </tr>
                 <tr>
                   <td className="py-3.5 px-4 font-semibold text-foreground">Alert Philosophy</td>
-                  <td className="py-3.5 px-4 font-bold text-primary bg-primary/5">Calm, adaptive grace periods</td>
+                  <td className="py-3.5 px-4 font-bold text-primary bg-primary/5">
+                    Calm, adaptive grace periods
+                  </td>
                   <td className="py-3.5 px-4 text-muted-foreground">Chaotic email notifications</td>
-                  <td className="py-3.5 px-4 text-muted-foreground">Piercing alarms & streaks guilt</td>
+                  <td className="py-3.5 px-4 text-muted-foreground">
+                    Piercing alarms & streaks guilt
+                  </td>
                 </tr>
                 <tr>
                   <td className="py-3.5 px-4 font-semibold text-foreground">Medical ID / SOS</td>
-                  <td className="py-3.5 px-4 font-bold text-primary bg-primary/5">1-Tap GPS & Paramedic Passport</td>
+                  <td className="py-3.5 px-4 font-bold text-primary bg-primary/5">
+                    1-Tap GPS & Paramedic Passport
+                  </td>
                   <td className="py-3.5 px-4 text-muted-foreground">Buried behind 2FA portals</td>
                   <td className="py-3.5 px-4 text-muted-foreground">Not supported</td>
                 </tr>
                 <tr>
                   <td className="py-3.5 px-4 font-semibold text-foreground">Data Privacy</td>
-                  <td className="py-3.5 px-4 font-bold text-primary bg-primary/5">Zero ads · AES-256 Encrypted</td>
-                  <td className="py-3.5 px-4 text-muted-foreground">Legacy institutional servers</td>
+                  <td className="py-3.5 px-4 font-bold text-primary bg-primary/5">
+                    Zero ads · AES-256 Encrypted
+                  </td>
+                  <td className="py-3.5 px-4 text-muted-foreground">
+                    Legacy institutional servers
+                  </td>
                   <td className="py-3.5 px-4 text-muted-foreground">Ad-monetized data brokers</td>
                 </tr>
               </tbody>
@@ -573,12 +613,15 @@ function Landing() {
                   Caregiver Story
                 </span>
                 <blockquote className="font-serif text-2xl sm:text-3xl font-bold leading-snug text-foreground">
-                  "I used to start every phone call with 'did you remember your blood-pressure pill?'
-                  Now DoseLoop tells me Dad is okay quietly. Our calls are back to talking about cricket."
+                  "I used to start every phone call with 'did you remember your blood-pressure
+                  pill?' Now DoseLoop tells me Dad is okay quietly. Our calls are back to talking
+                  about cricket."
                 </blockquote>
                 <div>
                   <p className="font-bold text-foreground">Ananya Iyer</p>
-                  <p className="text-xs text-muted-foreground">Long-distance daughter & caregiver</p>
+                  <p className="text-xs text-muted-foreground">
+                    Long-distance daughter & caregiver
+                  </p>
                 </div>
               </div>
 
@@ -603,7 +646,10 @@ function Landing() {
       </section>
 
       {/* Trust & Security */}
-      <section id="trust" className="border-b border-border/60 bg-primary/5 py-20 sm:py-24 text-center">
+      <section
+        id="trust"
+        className="border-b border-border/60 bg-primary/5 py-20 sm:py-24 text-center"
+      >
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <span className="grid size-14 place-items-center mx-auto rounded-2xl bg-primary/10 text-primary border border-primary/20 shadow-soft">
             <Lock className="size-7" />
@@ -612,28 +658,34 @@ function Landing() {
             Built on non-negotiable security & trust
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-xs sm:text-base leading-relaxed text-muted-foreground">
-            Healthcare data requires the highest ethical standard. Zero advertising, zero data brokers,
-            and complete cryptographic data sovereignty.
+            Healthcare data requires the highest ethical standard. Zero advertising, zero data
+            brokers, and complete cryptographic data sovereignty.
           </p>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-3 text-left">
             <div className="rounded-2xl border border-border/80 bg-card p-5 shadow-xs">
               <ShieldCheck className="size-5 text-primary" />
-              <h4 className="mt-3 font-serif font-bold text-base text-foreground">End-to-End Encrypted</h4>
+              <h4 className="mt-3 font-serif font-bold text-base text-foreground">
+                End-to-End Encrypted
+              </h4>
               <p className="mt-1 text-xs text-muted-foreground leading-normal">
                 Encrypted at rest with AES-256 and in transit with TLS 1.3 standards.
               </p>
             </div>
             <div className="rounded-2xl border border-border/80 bg-card p-5 shadow-xs">
               <Users className="size-5 text-accent" />
-              <h4 className="mt-3 font-serif font-bold text-base text-foreground">Strict Patient Consent</h4>
+              <h4 className="mt-3 font-serif font-bold text-base text-foreground">
+                Strict Patient Consent
+              </h4>
               <p className="mt-1 text-xs text-muted-foreground leading-normal">
                 Family members only see what you explicitly authorize. Revocable anytime.
               </p>
             </div>
             <div className="rounded-2xl border border-border/80 bg-card p-5 shadow-xs">
               <PhoneCall className="size-5 text-destructive" />
-              <h4 className="mt-3 font-serif font-bold text-base text-foreground">One-Tap Emergency SOS</h4>
+              <h4 className="mt-3 font-serif font-bold text-base text-foreground">
+                One-Tap Emergency SOS
+              </h4>
               <p className="mt-1 text-xs text-muted-foreground leading-normal">
                 Instant emergency medical ID access and designated caregiver alerting.
               </p>
@@ -646,7 +698,9 @@ function Landing() {
       <section id="faq" className="border-b border-border/60 py-20 sm:py-28">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <div className="text-center" data-reveal>
-            <p className="text-xs font-bold uppercase tracking-wider text-primary">Questions & Answers</p>
+            <p className="text-xs font-bold uppercase tracking-wider text-primary">
+              Questions & Answers
+            </p>
             <h2 className="mt-2 font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               Frequently Asked Questions
             </h2>
@@ -689,7 +743,12 @@ function Landing() {
                 <ArrowRight className="size-4 ml-1" />
               </Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="rounded-2xl bg-card border-border/80">
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="rounded-2xl bg-card border-border/80"
+            >
               <Link to="/auth">Sign into existing account</Link>
             </Button>
           </div>
@@ -712,32 +771,74 @@ function Landing() {
             </div>
 
             <div className="space-y-2.5">
-              <h5 className="text-xs font-bold uppercase tracking-wider text-foreground">Features</h5>
+              <h5 className="text-xs font-bold uppercase tracking-wider text-foreground">
+                Features
+              </h5>
               <ul className="space-y-1.5 text-xs text-muted-foreground">
-                <li><Link to="/dashboard" className="hover:text-primary">Today Dashboard</Link></li>
-                <li><Link to="/medications" className="hover:text-primary">Medication Engine</Link></li>
-                <li><Link to="/circle" className="hover:text-primary">Family Circle</Link></li>
-                <li><Link to="/assistant" className="hover:text-primary">Pulse AI Assistant</Link></li>
-                <li><Link to="/emergency" className="hover:text-primary">Emergency SOS</Link></li>
+                <li>
+                  <Link to="/dashboard" className="hover:text-primary">
+                    Today Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/medications" className="hover:text-primary">
+                    Medication Engine
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/circle" className="hover:text-primary">
+                    Family Circle
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/assistant" className="hover:text-primary">
+                    Pulse AI Assistant
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/emergency" className="hover:text-primary">
+                    Emergency SOS
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div className="space-y-2.5">
-              <h5 className="text-xs font-bold uppercase tracking-wider text-foreground">Resources</h5>
+              <h5 className="text-xs font-bold uppercase tracking-wider text-foreground">
+                Resources
+              </h5>
               <ul className="space-y-1.5 text-xs text-muted-foreground">
-                <li><Link to="/help" className="hover:text-primary">Help & Documentation</Link></li>
-                <li><Link to="/settings" className="hover:text-primary">Privacy & Data Export</Link></li>
-                <li><Link to="/profile" className="hover:text-primary">Account Management</Link></li>
-                <li><a href="#faq" className="hover:text-primary">Frequently Asked Questions</a></li>
+                <li>
+                  <Link to="/help" className="hover:text-primary">
+                    Help & Documentation
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/settings" className="hover:text-primary">
+                    Privacy & Data Export
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/profile" className="hover:text-primary">
+                    Account Management
+                  </Link>
+                </li>
+                <li>
+                  <a href="#faq" className="hover:text-primary">
+                    Frequently Asked Questions
+                  </a>
+                </li>
               </ul>
             </div>
 
             <div className="space-y-2.5">
-              <h5 className="text-xs font-bold uppercase tracking-wider text-foreground">Medical Disclaimer</h5>
+              <h5 className="text-xs font-bold uppercase tracking-wider text-foreground">
+                Medical Disclaimer
+              </h5>
               <p className="text-[11px] text-muted-foreground leading-relaxed">
-                DoseLoop provides schedule tracking and general educational information. It is not
-                a certified medical diagnostic device and does not substitute for professional
-                physician guidance or emergency 911 dispatch.
+                DoseLoop provides schedule tracking and general educational information. It is not a
+                certified medical diagnostic device and does not substitute for professional
+                physician guidance or emergency 112 / ambulance dispatch.
               </p>
             </div>
           </div>

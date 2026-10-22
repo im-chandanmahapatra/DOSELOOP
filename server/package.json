@@ -16,6 +16,8 @@
     "lint": "eslint src",
     "test": "tsx --test test/**/*.test.ts",
     "test:speech": "tsx --test ../client/test/speech.test.ts",
+    "test:emergency": "tsx --test ../client/test/emergency.test.ts",
+    "test:client": "tsx --test ../client/test/**/*.test.ts",
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",

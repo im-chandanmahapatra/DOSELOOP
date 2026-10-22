@@ -12,15 +12,7 @@ import {
   FileText,
 } from "lucide-react";
 import { toast } from "sonner";
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Cell,
-} from "recharts";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell } from "recharts";
 
 import { PageHeader } from "@/components/app/PageHeader";
 import { AiBadge } from "@/components/brand/AiBadge";
@@ -58,7 +50,9 @@ function CustomChartTooltip({
           <span className="font-numeric font-bold text-primary">{data.taken}</span> of{" "}
           <span className="font-numeric">{data.total}</span> doses logged
         </p>
-        <p className={`mt-0.5 font-bold ${pct === 100 ? "text-emerald-700 dark:text-emerald-400" : "text-amber-800 dark:text-amber-300"}`}>
+        <p
+          className={`mt-0.5 font-bold ${pct === 100 ? "text-emerald-700 dark:text-emerald-400" : "text-amber-800 dark:text-amber-300"}`}
+        >
           {pct}% adherence
         </p>
       </div>
@@ -84,7 +78,9 @@ function Analytics() {
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="flex flex-col items-center gap-3">
           <div className="size-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-          <p className="font-serif text-sm font-medium text-muted-foreground">Analyzing adherence trends...</p>
+          <p className="font-serif text-sm font-medium text-muted-foreground">
+            Analyzing adherence trends...
+          </p>
         </div>
       </div>
     );
@@ -92,10 +88,7 @@ function Analytics() {
   if (!data) return null;
 
   const { stats, adherenceWeek } = data;
-  const weeklyTotal = adherenceWeek.reduce(
-    (sum: number, d: DayData) => sum + d.taken,
-    0,
-  );
+  const weeklyTotal = adherenceWeek.reduce((sum: number, d: DayData) => sum + d.taken, 0);
 
   const iconMap: Record<string, React.ElementType> = {
     Target,
@@ -124,7 +117,12 @@ function Analytics() {
         title="Regimen Trends & Clarity"
         description="Longitudinal patterns over time to understand your routine — designed to reassure, never to judge."
         action={
-          <Button variant="wine" size="sm" onClick={handleExportPDF} className="rounded-xl shadow-soft">
+          <Button
+            variant="wine"
+            size="sm"
+            onClick={handleExportPDF}
+            className="rounded-xl shadow-soft"
+          >
             <Download className="size-3.5 mr-1.5" /> Export Clinical PDF
           </Button>
         }
@@ -173,7 +171,9 @@ function Analytics() {
         <Card variant="editorial" className="p-6 sm:p-8 shadow-soft lg:col-span-2">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-6 border-b border-border/60">
             <div>
-              <h2 className="font-serif text-xl font-bold text-foreground">Weekly Regimen Consistency</h2>
+              <h2 className="font-serif text-xl font-bold text-foreground">
+                Weekly Regimen Consistency
+              </h2>
               <p className="text-xs text-muted-foreground mt-0.5">
                 Dose adherence verification over the past 7 days
               </p>
@@ -205,7 +205,10 @@ function Analytics() {
                   domain={[0, 4]}
                   allowDecimals={false}
                 />
-                <Tooltip content={<CustomChartTooltip />} cursor={{ fill: "var(--color-muted)", opacity: 0.3 }} />
+                <Tooltip
+                  content={<CustomChartTooltip />}
+                  cursor={{ fill: "var(--color-muted)", opacity: 0.3 }}
+                />
                 <Bar dataKey="taken" radius={[8, 8, 0, 0]}>
                   {chartData.map((entry: DayData & { adherencePct: number }, index: number) => (
                     <Cell
@@ -244,12 +247,14 @@ function Analytics() {
               <AiBadge label="Pulse AI Analysis" />
             </div>
 
-            <h3 className="font-serif text-xl font-bold text-sidebar-foreground">Circadian Regimen Pattern</h3>
+            <h3 className="font-serif text-xl font-bold text-sidebar-foreground">
+              Circadian Regimen Pattern
+            </h3>
 
             <p className="text-sm leading-relaxed text-sidebar-foreground/90 font-medium">
-              Your adherence is highest on weekday mornings (100%). Friday evenings are when doses most often
-              slip by 30 minutes. Setting a quiet reminder shift to 7:30 PM could comfortably lift your
-              weekly streak past 21 consecutive days.
+              Your adherence is highest on weekday mornings (100%). Friday evenings are when doses
+              most often slip by 30 minutes. Setting a quiet reminder shift to 7:30 PM could
+              comfortably lift your weekly streak past 21 consecutive days.
             </p>
           </div>
 

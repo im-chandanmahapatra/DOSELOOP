@@ -801,3 +801,154 @@ ok 4 - Browser Feature Detection & Recovery Logic (0.6ms)
    - Real microphone acoustic verification in high-ambient-noise environments on physical Android devices.
    - iOS 18 Safari verification of session-by-session microphone permission dialogs.
 
+---
+
+## 15. India-First Emergency Architecture, SOS Location Sharing & Favicon Integration
+
+### 15.1 India-Specific Emergency Numbers & Official Verification Sources
+
+DoseLoop was engineered specifically for Indian healthcare realities. Unlike applications that assume North American 911 or generic templates, DoseLoop provides verified, direct access to official Government of India emergency response infrastructure.
+
+| Number | Service Name & Designation | Governing Authority | Official Source | Scope & Availability |
+| :--- | :--- | :--- | :--- | :--- |
+| **112** | **Emergency Response Support System (ERSS)** | Ministry of Home Affairs (MHA) | [112.gov.in](https://112.gov.in) | **Pan-India Unified (24/7):** Integrates Police, Fire, Ambulance, and Disaster dispatch. Operational across all 28 States & 8 UTs. Toll-free, works without SIM balance, roaming, or screen lock. |
+| **108** | **Emergency Medical Response / Ambulance (108 EMS)** | National Health Mission (NHM) / State Depts. | [nhm.gov.in](https://nhm.gov.in) | **State-Dependent:** Operational in 30+ States/UTs (PPP model via GVK-EMRI, ZHL, BVG). Primary fleet for acute trauma, cardiac arrest, respiratory failure, stroke, and road accidents. |
+| **102** | **National Ambulance Service (Maternal & Child Transport)** | MoHFW / NHM (JSSK / JSY Scheme) | [nhm.gov.in](https://nhm.gov.in) | **State-Dependent:** Dedicated free non-trauma transport for pregnant mothers (delivery & post-natal drop-back) and sick neonates/infants up to 1 year. Non-acute transport. |
+| **101** | **Fire and Rescue Services** | DG Fire Services, Civil Defence & Home Guards (MHA) | [dgfscdhg.gov.in](https://dgfscdhg.gov.in) | **Nationwide:** Municipal and state fire brigades for structural fires, industrial hazards, and physical rescue. Calls in modernized districts bridge to 112. |
+| **100** | **Police Emergency (Legacy PCR)** | Ministry of Home Affairs / State Police | [mha.gov.in](https://mha.gov.in) | **Active Legacy:** Traditional police control rooms. Functioning nationwide and routed to 112 ERSS dispatch in unified districts. |
+| **14416** | **Tele-MANAS (Mental Health Helpline)** | MoHFW / NIMHANS | [telemanas.mohfw.gov.in](https://telemanas.mohfw.gov.in) | **Nationwide (24/7):** Free tele-mental health counseling and psychological first aid in 20+ Indian languages. |
+| **1091** | **Women in Distress Helpline** | Ministry of Women & Child Development | [wcd.nic.in](https://wcd.nic.in) | **Nationwide (24/7):** Emergency rescue and support for women facing harassment or domestic distress. |
+| **1098** | **Childline (Emergency Child Helpline)** | MWCD / Mission Vatsalya | [wcd.nic.in](https://wcd.nic.in) | **Nationwide (24/7):** Emergency outreach for abandoned, endangered, or abused children. |
+| **1930** | **Citizen Financial Cyber Fraud Reporting** | Indian Cyber Crime Coordination Centre (I4C), MHA | [cybercrime.gov.in](https://cybercrime.gov.in) | **Nationwide:** Immediate financial transaction freeze for digital banking/UPI fraud within the golden hour. |
+
+#### State-Dependent Limitations & Operational Disclaimers
+1. **Public Health as a State Subject:** Under the Seventh Schedule of the Constitution of India, public health and police dispatch are administered by State Governments. While ERSS 112 provides a standardized national ingress, dispatch speed and ambulance equipment (ALS vs BLS) depend on state-level fleet allocation.
+2. **108 vs 102 Clinical Distinction:** 108 is manned by trained Emergency Medical Technicians (EMTs) equipped for acute stabilization. 102 operates Patient Transport Vehicles (PTVs) specifically funded under the Janani Shishu Suraksha Karyakram (JSSK). DoseLoop explicitly instructs users with acute trauma to dial 108 or 112.
+3. **Clear Dial Destinations:** Every emergency button in DoseLoop clearly renders the destination number (e.g. `Call 112`, `Call 108`) with valid `tel:` protocol handlers, guaranteeing that stressed users know precisely what will happen before placing a phone call.
+
+---
+
+### 15.2 SOS Mode Architecture & Client-Side Location Sharing
+
+The SOS Mode (`client/src/lib/emergency/sosLocation.ts` and `client/src/components/emergency/SosLocationPanel.tsx`) implements an uncompromised, client-controlled emergency broadcast flow:
+
+```
+[User Taps "Find & Share My Location"]
+                 │
+                 ▼
+[Check Browser Environment & Secure Context (HTTPS/localhost)]
+                 │
+                 ├── Insecure/Unsupported ──► Show Actionable Error + Call 112
+                 ▼
+[Request navigator.geolocation.getCurrentPosition()]
+  Options: { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+                 │
+                 ├── User Denied Permission ──► Explain Settings Fix + Call 112
+                 ├── Request Timed Out (12s) ──► Suggest Retry + Call 112
+                 ├── Position Unavailable   ──► Check GPS Signal + Call 112
+                 │
+                 ▼
+[Success: Coordinates Received In-Memory Only]
+  - Formatted Latitude / Longitude (e.g., 12.9716° N, 77.5946° E)
+  - Accuracy Radius (e.g., ±12m)
+  - Detection Timestamp (IST / Local)
+  - Google Maps URL: https://www.google.com/maps?q={lat},{lng}
+                 │
+                 ▼
+[Prepare Standardized Emergency Share Message]
+  "I'm requesting help. My current location: https://www.google.com/maps?q=... (approx. ±12m accuracy, 22 Oct, 8:45 PM). Please contact me or send assistance."
+                 │
+                 ├── 1. Native Share Sheet (navigator.share) ──► User picks SMS, WhatsApp, Contacts
+                 ├── 2. WhatsApp Direct Link (api.whatsapp.com/send?text=...)
+                 ├── 3. Clipboard API Copy (navigator.clipboard.writeText) + Visual Toast
+                 └── 4. Read-Only Textarea Fallback for Manual Selection
+```
+
+#### Technical Browser API Specifications
+1. **Secure Context Requirement:** In accordance with the W3C Geolocation API specification, modern browsers strictly prohibit geolocation requests over insecure HTTP (`window.isSecureContext === false`). DoseLoop checks `checkGeolocationSupport()` and surfaces an informative guidance message explaining HTTPS requirements.
+2. **Timeout Safeguard:** A strict 12,000 ms (`12s`) timeout prevents the UI from becoming permanently trapped in a loading spinner if device positioning hardware stalls or is shielded.
+3. **Concurrency Guard:** A React ref flag (`isLocatingRef.current`) immediately blocks duplicate invocations caused by repeated or panicked double-taps.
+
+---
+
+### 15.3 Critical Privacy & Zero-Knowledge Safeguards
+
+1. **Zero Backend Coordinate Transmission:** Unlike legacy implementations that POSTed user GPS coordinates to a central database, the coordinates in this implementation are **never transmitted to DoseLoop servers or any third-party analytics backend**.
+2. **Zero Storage Persistence:** Coordinates exist solely in React component state (transient volatile memory). They are **never saved to `localStorage`, `sessionStorage`, `IndexedDB`, or cookies**, preventing unauthorized recovery or forensic tracking.
+3. **Explicit User-Controlled Recipient:** Sharing happens entirely through the operating system's native share sheet or clipboard. DoseLoop never sends messages silently or automatically contacts police/ambulance without user confirmation.
+4. **No False Assurances:** The UI never states "Help is on the way" unless a dispatch center has explicitly confirmed a ticket. The UI maintains a prominent, unblocked **"Call 112 (Universal)"** button at all times.
+
+---
+
+### 15.4 DoseLoop Brand Favicon & Touch Icon Architecture
+
+A custom brand favicon system was engineered to replace default framework icons with the canonical DoseLoop visual identity:
+
+- **Symbolism:** An interrupted circular loop (`stroke-width="2.8"`, round caps) with a steady centered dot (`circle cx="16" cy="16" r="3"`), representing a calm, never-broken cycle of care.
+- **Color Palette:** Refined Burgundy Wine (`#7A2E38`), Warm Ivory (`#FFF8F0`), and Antique Gold (`#B89450`).
+- **Asset Manifest in `client/public/`:**
+  - `favicon.svg` (SVG vector, scalable to all resolutions, dark-mode compatible)
+  - `favicon-16x16.png` (4x supersampled rasterized PNG)
+  - `favicon-32x32.png` (4x supersampled rasterized PNG)
+  - `apple-touch-icon.png` (180x180 PNG for iOS home screen)
+  - `favicon.ico` (Multi-resolution ICO containing 16x16, 32x32, and 48x48 icon frames)
+  - `site.webmanifest` (PWA metadata specifying theme color `#7A2E38` and background `#FAF7F2`)
+- **HTML Head Integration:** Configured in `client/index.html` with explicit `<link rel="icon">`, `<link rel="apple-touch-icon">`, and `<meta name="theme-color" content="#7A2E38">`.
+
+---
+
+### 15.5 Test Suite Results & Production Verification
+
+#### Automated Unit & Integration Tests
+Automated test suites were executed using Node's native test runner (`tsx --test`):
+
+```
+> npm run test:client
+TAP version 13
+# Subtest: Indian Emergency Services Registry
+    ok 1 - includes 112 as the primary pan-India unified emergency service
+    ok 2 - includes 108 for emergency medical response with state-dependent qualification
+    ok 3 - includes 102 for National Ambulance Service dedicated to maternal & child transport
+    ok 4 - includes 101 for Fire and Rescue Services with note on ERSS integration
+    ok 5 - includes 100 for Police with note on 112 unification
+    ok 6 - verifies every emergency service has a valid tel: destination and official source
+    ok 7 - includes specialized Indian helplines: Tele-MANAS, Women's, Childline, and Cyber Fraud
+ok 1 - Indian Emergency Services Registry (6.1ms)
+
+# Subtest: SOS Coordinates & Map Link Generation
+    ok 1 - formats positive (Northern / Eastern) coordinates accurately
+    ok 2 - formats negative (Southern / Western) coordinates accurately
+    ok 3 - formats accuracy radius correctly
+    ok 4 - generates standard Google Maps URL with 6 decimal places
+    ok 5 - constructs concise, actionable SOS emergency share message
+    ok 6 - generates valid WhatsApp share URL with encoded message
+    ok 7 - configures Geolocation with high accuracy and a 12-second timeout
+ok 2 - SOS Coordinates & Map Link Generation (38.5ms)
+
+# Subtest: Geolocation Error Handling & User Guidance
+    ok 1 - maps PERMISSION_DENIED (code 1) to clear browser settings guidance
+    ok 2 - maps POSITION_UNAVAILABLE (code 2) to GPS hardware guidance
+    ok 3 - maps TIMEOUT (code 3) to retry and direct emergency advice
+    ok 4 - maps arbitrary unknown errors gracefully
+ok 3 - Geolocation Error Handling & User Guidance (1.6ms)
+
+# Subtest: Environment & Privacy Invariant Validation
+    ok 1 - detects when running outside a browser environment
+    ok 2 - ensures zero coordinate leakage into global storage
+ok 4 - Environment & Privacy Invariant Validation (1.2ms)
+
+# (Plus 18/18 Speech tests: Phonetics, Markdown Sanitizer, Chunking, Feature Detection)
+
+1..8
+# tests 38, suites 8, pass 38, fail 0
+# duration_ms: 654ms
+```
+
+- **Backend Health & Response Tests:** All 5 tests passing (`npm test`).
+- **Static Type Checking:** `npm run type-check` exited with **code 0** across client and server.
+- **Client Linting:** `npm --prefix client run lint` exited with **code 0** (0 errors, 0 warnings).
+- **Vite Production Bundle:** `npm --prefix client run build` built successfully in 2.74s.
+- **Asset Endpoints:** Verified 200 OK responses for `favicon.svg`, `favicon.ico`, `apple-touch-icon.png`, and `site.webmanifest`.
+- **Browser Automation Verification:** Browser subagent confirmed clean page loading at `http://localhost:5173/emergency`, responsive layout at 375×700 mobile viewport, accordion expansion of specialized helplines, and error recovery on geolocation timeout.
+
+

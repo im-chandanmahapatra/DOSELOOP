@@ -79,13 +79,7 @@ function RailLink({
   );
 }
 
-function RailBody({
-  pathname,
-  onNavigate,
-}: {
-  pathname: string;
-  onNavigate?: () => void;
-}) {
+function RailBody({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
   const isActive = (to: string) => pathname.startsWith(to);
   const { data: user } = useQuery({
     queryKey: ["/user/profile"],
@@ -154,14 +148,18 @@ function RailBody({
         >
           <Avatar className="size-8 shrink-0 border border-sidebar-border">
             <AvatarFallback className="bg-sidebar-primary text-sidebar-primary-foreground text-xs font-bold">
-              {user ? `${user.firstName?.charAt(0) || "A"}${user.lastName?.charAt(0) || "K"}` : "AK"}
+              {user
+                ? `${user.firstName?.charAt(0) || "A"}${user.lastName?.charAt(0) || "K"}`
+                : "AK"}
             </AvatarFallback>
           </Avatar>
           <span className="min-w-0 overflow-hidden opacity-0 transition-opacity duration-[250ms] group-hover:opacity-100">
             <span className="block truncate text-xs font-semibold text-sidebar-foreground">
               {user ? `${user.firstName} ${user.lastName}` : "Aarav Kumar"}
             </span>
-            <span className="block truncate text-[10px] text-sidebar-foreground/60">Personal Care</span>
+            <span className="block truncate text-[10px] text-sidebar-foreground/60">
+              Personal Care
+            </span>
           </span>
         </Link>
       </div>

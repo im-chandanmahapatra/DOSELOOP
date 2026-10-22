@@ -16,10 +16,12 @@ const buttonVariants = cva(
         warm: "bg-accent text-accent-foreground shadow-soft hover:brightness-[0.97] active:scale-[0.98]",
         gold: "bg-accent text-accent-foreground shadow-soft hover:brightness-[0.97] active:scale-[0.98]",
         sage: "bg-success text-success-foreground shadow-soft hover:bg-success/90 active:scale-[0.98]",
-        destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 active:scale-[0.98]",
+        destructive:
+          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 active:scale-[0.98]",
         outline:
           "border border-border bg-card text-foreground shadow-xs hover:bg-secondary/70 hover:border-primary/40 active:scale-[0.98]",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 active:scale-[0.98]",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80 active:scale-[0.98]",
         ghost: "hover:bg-secondary/70 hover:text-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         pill: "rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80",

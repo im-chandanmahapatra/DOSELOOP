@@ -90,7 +90,9 @@ function Medications() {
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="flex flex-col items-center gap-3">
           <div className="size-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-          <p className="font-serif text-sm font-medium text-muted-foreground">Loading your medication regimen...</p>
+          <p className="font-serif text-sm font-medium text-muted-foreground">
+            Loading your medication regimen...
+          </p>
         </div>
       </div>
     );
@@ -143,7 +145,8 @@ function Medications() {
                 : "text-muted-foreground hover:text-foreground",
             )}
           >
-            Refill Alert ({medications.filter((m: MedicationItem) => (m.refillIn ?? 99) <= 14).length})
+            Refill Alert (
+            {medications.filter((m: MedicationItem) => (m.refillIn ?? 99) <= 14).length})
           </button>
           <button
             onClick={() => setActiveFilter("critical")}
@@ -167,7 +170,9 @@ function Medications() {
         {filteredMeds.length === 0 && (
           <div className="col-span-full text-center p-14 border border-dashed border-border/90 rounded-3xl bg-card/60 text-muted-foreground space-y-3 shadow-soft">
             <Pill className="size-12 mx-auto text-primary/60" />
-            <h3 className="font-serif text-lg font-bold text-foreground">No medications match filter</h3>
+            <h3 className="font-serif text-lg font-bold text-foreground">
+              No medications match filter
+            </h3>
             <p className="text-xs sm:text-sm max-w-sm mx-auto leading-relaxed">
               Add your vitamins or daily prescriptions to begin receiving gentle reminders.
             </p>
@@ -274,7 +279,9 @@ function Medications() {
                           "h-full rounded-full transition-all",
                           isLowStock ? "bg-amber-500" : "bg-primary",
                         )}
-                        style={{ width: `${Math.min(100, Math.max(15, (refillDays / 30) * 100))}%` }}
+                        style={{
+                          width: `${Math.min(100, Math.max(15, (refillDays / 30) * 100))}%`,
+                        }}
                       />
                     </div>
                   </div>
@@ -309,10 +316,7 @@ function Medications() {
 
       {/* Connected Edit Medication Dialog */}
       {editingMed && (
-        <EditMedicationDialog
-          medication={editingMed}
-          onClose={() => setEditingMed(null)}
-        />
+        <EditMedicationDialog medication={editingMed} onClose={() => setEditingMed(null)} />
       )}
     </div>
   );
@@ -502,8 +506,7 @@ function EditMedicationDialog({
   });
 
   const mutation = useMutation({
-    mutationFn: (data: typeof formData) =>
-      updater(`/medications/${medication.id}`, data, "PUT"),
+    mutationFn: (data: typeof formData) => updater(`/medications/${medication.id}`, data, "PUT"),
     onSuccess: () => {
       trackEvent("medication_updated");
       toast.success("Medication updated ✓");
@@ -517,7 +520,9 @@ function EditMedicationDialog({
     <Dialog open={true} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-lg rounded-3xl p-6 sm:p-8 border-border bg-card shadow-float">
         <DialogHeader>
-          <DialogTitle className="font-serif text-2xl font-bold">Edit {medication.name}</DialogTitle>
+          <DialogTitle className="font-serif text-2xl font-bold">
+            Edit {medication.name}
+          </DialogTitle>
           <DialogDescription className="text-xs sm:text-sm">
             Update dosage, schedules, or instructions for this prescription.
           </DialogDescription>

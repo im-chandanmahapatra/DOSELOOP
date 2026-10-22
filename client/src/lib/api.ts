@@ -420,9 +420,7 @@ export const updater = async (url: string, data: unknown, method: string = "POST
     if (saved && status) {
       try {
         const doses = JSON.parse(saved);
-        const updated = doses.map((d: { id: string }) =>
-          d.id === doseId ? { ...d, status } : d,
-        );
+        const updated = doses.map((d: { id: string }) => (d.id === doseId ? { ...d, status } : d));
         localStorage.setItem("doseloop_local_doses", JSON.stringify(updated));
       } catch {
         // ignore
@@ -445,4 +443,3 @@ export const updater = async (url: string, data: unknown, method: string = "POST
 
   return { success: true, data };
 };
-

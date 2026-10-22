@@ -34,10 +34,25 @@ export const Route = createFileRoute("/_app/wellness")({
 });
 
 const moodOptions = [
-  { id: 1, label: "Rough", icon: Frown, tone: "text-destructive border-destructive/30 bg-destructive/8" },
+  {
+    id: 1,
+    label: "Rough",
+    icon: Frown,
+    tone: "text-destructive border-destructive/30 bg-destructive/8",
+  },
   { id: 2, label: "Low", icon: Meh, tone: "text-amber-600 border-amber-500/30 bg-amber-500/8" },
-  { id: 3, label: "Okay", icon: Smile, tone: "text-muted-foreground border-border bg-secondary/50" },
-  { id: 4, label: "Good", icon: Heart, tone: "text-emerald-700 border-emerald-500/30 bg-emerald-500/8" },
+  {
+    id: 3,
+    label: "Okay",
+    icon: Smile,
+    tone: "text-muted-foreground border-border bg-secondary/50",
+  },
+  {
+    id: 4,
+    label: "Good",
+    icon: Heart,
+    tone: "text-emerald-700 border-emerald-500/30 bg-emerald-500/8",
+  },
   { id: 5, label: "Vibrant", icon: Sparkles, tone: "text-primary border-primary/30 bg-primary/8" },
 ];
 
@@ -82,8 +97,12 @@ function Wellness() {
   });
 
   const vitalsMutation = useMutation({
-    mutationFn: (data: { systolic: number; diastolic: number; heartRate: number; glucose: number }) =>
-      updater("/wellness/vitals", data, "POST"),
+    mutationFn: (data: {
+      systolic: number;
+      diastolic: number;
+      heartRate: number;
+      glucose: number;
+    }) => updater("/wellness/vitals", data, "POST"),
     onSuccess: () => {
       toast.success("Vitals logged successfully ✓");
       queryClient.invalidateQueries({ queryKey: ["/wellness/history"] });
@@ -112,13 +131,25 @@ function Wellness() {
   // Compute BP clinical guidance
   const sysNum = parseInt(systolic) || 120;
   const diaNum = parseInt(diastolic) || 80;
-  let bpCategory = { label: "Normal", tone: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/25" };
+  let bpCategory = {
+    label: "Normal",
+    tone: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/25",
+  };
   if (sysNum >= 140 || diaNum >= 90) {
-    bpCategory = { label: "Stage 2 Hypertension", tone: "bg-destructive/15 text-destructive border-destructive/25" };
+    bpCategory = {
+      label: "Stage 2 Hypertension",
+      tone: "bg-destructive/15 text-destructive border-destructive/25",
+    };
   } else if (sysNum >= 130 || diaNum >= 80) {
-    bpCategory = { label: "Stage 1 Hypertension", tone: "bg-amber-500/15 text-amber-800 dark:text-amber-300 border-amber-500/25" };
+    bpCategory = {
+      label: "Stage 1 Hypertension",
+      tone: "bg-amber-500/15 text-amber-800 dark:text-amber-300 border-amber-500/25",
+    };
   } else if (sysNum >= 120 && diaNum < 80) {
-    bpCategory = { label: "Elevated", tone: "bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/20" };
+    bpCategory = {
+      label: "Elevated",
+      tone: "bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/20",
+    };
   }
 
   return (
@@ -180,7 +211,11 @@ function Wellness() {
             <div className="space-y-2">
               <div className="flex justify-between text-xs font-semibold text-muted-foreground">
                 <span>{waterPct}% of daily target</span>
-                <span>{waterGoal - localWater > 0 ? `${waterGoal - localWater} ml remaining` : "Daily target reached! 🎉"}</span>
+                <span>
+                  {waterGoal - localWater > 0
+                    ? `${waterGoal - localWater} ml remaining`
+                    : "Daily target reached! 🎉"}
+                </span>
               </div>
               <div className="h-2.5 overflow-hidden rounded-full bg-sky-950/15 dark:bg-sky-950/40">
                 <div
@@ -237,7 +272,8 @@ function Wellness() {
             </div>
 
             <p className="text-xs text-muted-foreground leading-relaxed text-center max-w-xs mx-auto">
-              Consistent sleep improves medication metabolism and helps stabilize systolic blood pressure.
+              Consistent sleep improves medication metabolism and helps stabilize systolic blood
+              pressure.
             </p>
           </div>
 
@@ -268,7 +304,9 @@ function Wellness() {
             <div>
               <div className="flex items-center gap-2">
                 <HeartPulse className="size-5 text-primary" />
-                <h3 className="font-serif text-lg font-bold text-foreground">Cardiovascular Vitals Station</h3>
+                <h3 className="font-serif text-lg font-bold text-foreground">
+                  Cardiovascular Vitals Station
+                </h3>
               </div>
               <p className="text-xs text-muted-foreground">
                 Record today's blood pressure and resting pulse for clinical records.
@@ -281,7 +319,9 @@ function Wellness() {
 
           <form onSubmit={handleSaveVitals} className="mt-6 grid gap-4 sm:grid-cols-4 items-end">
             <div className="space-y-1.5">
-              <Label htmlFor="bp-sys" className="text-xs font-bold">Systolic (mmHg)</Label>
+              <Label htmlFor="bp-sys" className="text-xs font-bold">
+                Systolic (mmHg)
+              </Label>
               <Input
                 id="bp-sys"
                 type="number"
@@ -293,7 +333,9 @@ function Wellness() {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="bp-dia" className="text-xs font-bold">Diastolic (mmHg)</Label>
+              <Label htmlFor="bp-dia" className="text-xs font-bold">
+                Diastolic (mmHg)
+              </Label>
               <Input
                 id="bp-dia"
                 type="number"
@@ -305,7 +347,9 @@ function Wellness() {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="hr" className="text-xs font-bold">Heart Rate (BPM)</Label>
+              <Label htmlFor="hr" className="text-xs font-bold">
+                Heart Rate (BPM)
+              </Label>
               <Input
                 id="hr"
                 type="number"
@@ -326,7 +370,9 @@ function Wellness() {
         <Card variant="editorial" className="p-6 sm:p-8 shadow-soft sm:col-span-2">
           <div className="flex items-center justify-between border-b border-border/60 pb-4">
             <div>
-              <h3 className="font-serif text-lg font-bold text-foreground">How are you feeling today?</h3>
+              <h3 className="font-serif text-lg font-bold text-foreground">
+                How are you feeling today?
+              </h3>
               <p className="text-xs text-muted-foreground">
                 Helps your Family Circle understand your comfort level without intrusive calls.
               </p>
@@ -357,7 +403,9 @@ function Wellness() {
                   )}
                   aria-pressed={selected}
                 >
-                  <Icon className={cn("size-6 sm:size-7", selected ? "text-primary-foreground" : "")} />
+                  <Icon
+                    className={cn("size-6 sm:size-7", selected ? "text-primary-foreground" : "")}
+                  />
                   <span className="text-xs font-bold">{m.label}</span>
                 </button>
               );

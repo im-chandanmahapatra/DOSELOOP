@@ -68,28 +68,18 @@ function MarkdownMessage({ content }: { content: string }) {
             {children}
           </h3>
         ),
-        p: ({ children }) => (
-          <p className="mb-2 text-sm leading-relaxed last:mb-0">{children}</p>
-        ),
+        p: ({ children }) => <p className="mb-2 text-sm leading-relaxed last:mb-0">{children}</p>,
         ul: ({ children }) => (
-          <ul className="mb-2 ml-4 list-disc space-y-1 text-sm last:mb-0">
-            {children}
-          </ul>
+          <ul className="mb-2 ml-4 list-disc space-y-1 text-sm last:mb-0">{children}</ul>
         ),
         ol: ({ children }) => (
-          <ol className="mb-2 ml-4 list-decimal space-y-1 text-sm last:mb-0">
-            {children}
-          </ol>
+          <ol className="mb-2 ml-4 list-decimal space-y-1 text-sm last:mb-0">{children}</ol>
         ),
-        li: ({ children }) => (
-          <li className="leading-relaxed">{children}</li>
-        ),
+        li: ({ children }) => <li className="leading-relaxed">{children}</li>,
         strong: ({ children }) => (
           <strong className="font-semibold text-foreground">{children}</strong>
         ),
-        em: ({ children }) => (
-          <em className="italic text-muted-foreground">{children}</em>
-        ),
+        em: ({ children }) => <em className="italic text-muted-foreground">{children}</em>,
         hr: () => <hr className="my-3 border-border" />,
         blockquote: ({ children }) => (
           <blockquote className="my-2 border-l-2 border-primary pl-3 text-sm italic text-muted-foreground">
@@ -113,18 +103,12 @@ function MarkdownMessage({ content }: { content: string }) {
             <table className="w-full text-xs">{children}</table>
           </div>
         ),
-        thead: ({ children }) => (
-          <thead className="bg-muted/50">{children}</thead>
-        ),
+        thead: ({ children }) => <thead className="bg-muted/50">{children}</thead>,
         th: ({ children }) => (
-          <th className="px-3 py-2 text-left font-semibold text-foreground">
-            {children}
-          </th>
+          <th className="px-3 py-2 text-left font-semibold text-foreground">{children}</th>
         ),
         td: ({ children }) => (
-          <td className="border-t border-border px-3 py-2 text-muted-foreground">
-            {children}
-          </td>
+          <td className="border-t border-border px-3 py-2 text-muted-foreground">{children}</td>
         ),
       }}
     >
@@ -162,9 +146,7 @@ function AssistantBubble({
       <div
         className={cn(
           "rounded-2xl border bg-card p-4 shadow-soft transition-all duration-200",
-          isSpeaking
-            ? "border-primary/60 ring-1 ring-primary/20 shadow-glow"
-            : "border-border/80"
+          isSpeaking ? "border-primary/60 ring-1 ring-primary/20 shadow-glow" : "border-border/80",
         )}
       >
         <div className="mb-2 flex items-center justify-between border-b border-border/50 pb-2">
@@ -200,7 +182,7 @@ function AssistantBubble({
                   "flex items-center gap-1 rounded-lg px-2 py-1 text-[11px] font-medium transition-all",
                   isSpeaking
                     ? "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
                 title={isSpeaking ? "Stop reading aloud" : "Listen to answer"}
                 aria-label={isSpeaking ? "Stop reading aloud" : "Listen to answer"}
@@ -311,11 +293,8 @@ function Assistant() {
   }, [messages]);
 
   const aiMutation = useMutation({
-    mutationFn: (userMessage: string) =>
-      updater("/ai/chat", { message: userMessage }, "POST"),
-    onSuccess: (
-      res: { success: boolean; data: { message: string; fromApi: boolean } },
-    ) => {
+    mutationFn: (userMessage: string) => updater("/ai/chat", { message: userMessage }, "POST"),
+    onSuccess: (res: { success: boolean; data: { message: string; fromApi: boolean } }) => {
       const reply = res?.data?.message ?? "No response received.";
       setMessages((prev) => [
         ...prev,
@@ -341,10 +320,7 @@ function Assistant() {
     if (speechRecognition.isListening) {
       speechRecognition.stopListening();
     }
-    setMessages((prev) => [
-      ...prev,
-      { id: crypto.randomUUID(), role: "user", content: value },
-    ]);
+    setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: "user", content: value }]);
     setInput("");
     trackEvent("ai_message_sent");
     aiMutation.mutate(value);
@@ -398,7 +374,8 @@ function Assistant() {
                   Ask Pulse AI anything
                 </p>
                 <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
-                  Medications interactions, missed dose protocols, hydration, or navigating DoseLoop features.
+                  Medications interactions, missed dose protocols, hydration, or navigating DoseLoop
+                  features.
                 </p>
               </div>
               <div className="flex flex-wrap justify-center gap-2 pt-2">
@@ -425,15 +402,11 @@ function Assistant() {
                   id={m.id}
                   content={m.content}
                   isSpeaking={
-                    speechSynthesis.isSpeaking &&
-                    speechSynthesis.speakingMessageId === m.id
+                    speechSynthesis.isSpeaking && speechSynthesis.speakingMessageId === m.id
                   }
                   ttsSupported={speechSynthesis.isSupported}
                   onToggleSpeech={(id, text) => {
-                    if (
-                      speechSynthesis.isSpeaking &&
-                      speechSynthesis.speakingMessageId === id
-                    ) {
+                    if (speechSynthesis.isSpeaking && speechSynthesis.speakingMessageId === id) {
                       speechSynthesis.stop();
                     } else {
                       speechSynthesis.speak(id, text);
@@ -504,12 +477,12 @@ function Assistant() {
                 "size-11 shrink-0 rounded-xl transition-all duration-200",
                 speechRecognition.isListening &&
                   "animate-pulse ring-2 ring-destructive/40 shadow-glow",
-                !speechRecognition.isSupported && "opacity-60 cursor-not-allowed"
+                !speechRecognition.isSupported && "opacity-60 cursor-not-allowed",
               )}
               onClick={() => {
                 if (!speechRecognition.isSupported) {
                   toast.info(
-                    "Speech recognition is not supported in this browser. Please use Google Chrome, Microsoft Edge, or Apple Safari."
+                    "Speech recognition is not supported in this browser. Please use Google Chrome, Microsoft Edge, or Apple Safari.",
                   );
                   return;
                 }
@@ -524,15 +497,15 @@ function Assistant() {
                 !speechRecognition.isSupported
                   ? "Voice input not supported in this browser (use Chrome, Edge, or Safari)"
                   : speechRecognition.isListening
-                  ? "Stop listening"
-                  : "Start voice input (microphone)"
+                    ? "Stop listening"
+                    : "Start voice input (microphone)"
               }
               aria-label={
                 !speechRecognition.isSupported
                   ? "Voice input not supported"
                   : speechRecognition.isListening
-                  ? "Stop listening"
-                  : "Start voice input"
+                    ? "Stop listening"
+                    : "Start voice input"
               }
             >
               {speechRecognition.isListening ? (
@@ -541,9 +514,7 @@ function Assistant() {
                 <Mic
                   className={cn(
                     "size-4",
-                    speechRecognition.isSupported
-                      ? "text-foreground"
-                      : "text-muted-foreground/60"
+                    speechRecognition.isSupported ? "text-foreground" : "text-muted-foreground/60",
                   )}
                 />
               )}
@@ -605,7 +576,8 @@ function Assistant() {
 
       <p className="flex items-center gap-2 text-xs text-muted-foreground">
         <ShieldAlert className="size-4 shrink-0 text-amber-600 dark:text-amber-500" />
-        Pulse AI provides health information, not medical advice. In a life-threatening emergency, call emergency services (911 / 112) immediately.
+        Pulse AI provides health information, not medical advice. In a life-threatening emergency,
+        call National Emergency 112 (ERSS India) immediately.
       </p>
     </div>
   );

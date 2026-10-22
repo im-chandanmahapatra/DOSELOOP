@@ -14,10 +14,7 @@
  */
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import type {
-  UseSpeechSynthesisOptions,
-  UseSpeechSynthesisReturn,
-} from "@/lib/speech/speechTypes";
+import type { UseSpeechSynthesisOptions, UseSpeechSynthesisReturn } from "@/lib/speech/speechTypes";
 import { sanitizeForSpeech, chunkTextForSpeech } from "@/lib/speech/markdownSanitizer";
 
 function isSpeechSynthesisSupported(): boolean {
@@ -33,7 +30,7 @@ function isSpeechSynthesisSupported(): boolean {
  */
 function resolveBestVoice(
   voices: SpeechSynthesisVoice[],
-  targetLang: string
+  targetLang: string,
 ): SpeechSynthesisVoice | null {
   if (!voices || voices.length === 0) return null;
 
@@ -52,15 +49,13 @@ function resolveBestVoice(
         v.name.toLowerCase().includes("india") ||
         v.name.toLowerCase().includes("neerja") ||
         v.name.toLowerCase().includes("prabhat") ||
-        v.name.toLowerCase().includes("rishi")
+        v.name.toLowerCase().includes("rishi"),
     );
     if (indianVoice) return indianVoice;
   }
 
   // 3. Any voice matching primary language (e.g. English "en-US", "en-GB")
-  const primaryMatch = voices.find((v) =>
-    v.lang.toLowerCase().startsWith(primaryLang)
-  );
+  const primaryMatch = voices.find((v) => v.lang.toLowerCase().startsWith(primaryLang));
   if (primaryMatch) return primaryMatch;
 
   // 4. Default voice designated by system
@@ -72,7 +67,7 @@ function resolveBestVoice(
 }
 
 export function useSpeechSynthesis(
-  options: UseSpeechSynthesisOptions = {}
+  options: UseSpeechSynthesisOptions = {},
 ): UseSpeechSynthesisReturn {
   const {
     lang = "en-IN",
@@ -244,7 +239,7 @@ export function useSpeechSynthesis(
 
       playChunk(0);
     },
-    [isSupported, voices, lang, rate, pitch, volume, stop]
+    [isSupported, voices, lang, rate, pitch, volume, stop],
   );
 
   // Cleanup on unmount

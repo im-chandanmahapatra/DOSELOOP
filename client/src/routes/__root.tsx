@@ -42,9 +42,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center p-8 rounded-3xl border border-border/80 bg-card shadow-soft">
-        <h1 className="font-serif text-2xl font-bold text-foreground">
-          Something went wrong
-        </h1>
+        <h1 className="font-serif text-2xl font-bold text-foreground">Something went wrong</h1>
         <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
           We encountered an unexpected error while loading this view. Your health data is safe.
         </p>

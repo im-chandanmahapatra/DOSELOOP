@@ -1,0 +1,26 @@
+{
+  "name": "DoseLoop — Family Health Companion",
+  "short_name": "DoseLoop",
+  "description": "AI-powered family health and medication companion for India",
+  "icons": [
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#7A2E38",
+  "background_color": "#FAF7F2",
+  "display": "standalone",
+  "orientation": "portrait"
+}

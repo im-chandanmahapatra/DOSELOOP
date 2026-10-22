@@ -49,9 +49,9 @@ export function sanitizeForSpeech(markdown: string): string {
 
   // 10. Handle Markdown tables: replace pipe dividers with commas and sentence ends
   text = text.replace(/^\s*\|[-:\s|]+\|\s*$/gm, ""); // Remove separator row |---|---|
-  text = text.replace(/^\s*\|\s*/gm, "");            // Remove leading pipe
-  text = text.replace(/\s*\|\s*$/gm, ".");           // Replace trailing pipe with period
-  text = text.replace(/\s*\|\s*/g, ", ");            // Replace interior pipes with comma
+  text = text.replace(/^\s*\|\s*/gm, ""); // Remove leading pipe
+  text = text.replace(/\s*\|\s*$/gm, "."); // Replace trailing pipe with period
+  text = text.replace(/\s*\|\s*/g, ", "); // Replace interior pipes with comma
 
   // 11. Remove horizontal rules
   text = text.replace(/^\s*[-*_]{3,}\s*$/gm, "");
@@ -60,9 +60,9 @@ export function sanitizeForSpeech(markdown: string): string {
   text = expandMedicalAbbreviations(text);
 
   // 13. Clean up excessive punctuation and whitespace
-  text = text.replace(/\.{2,}/g, ".");              // Fix multiple periods
-  text = text.replace(/([.!?])\s*([.!?])/g, "$1");    // Deduplicate adjacent punctuation
-  text = text.replace(/\s+/g, " ");                 // Normalize whitespace
+  text = text.replace(/\.{2,}/g, "."); // Fix multiple periods
+  text = text.replace(/([.!?])\s*([.!?])/g, "$1"); // Deduplicate adjacent punctuation
+  text = text.replace(/\s+/g, " "); // Normalize whitespace
   text = text.trim();
 
   return text;

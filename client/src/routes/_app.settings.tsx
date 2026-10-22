@@ -135,11 +135,36 @@ function Settings() {
   }
 
   const categories = [
-    { id: "appearance" as const, label: "Appearance & Theme", icon: Moon, desc: "Color modes & typography scale" },
-    { id: "notifications" as const, label: "Notifications & Alerts", icon: Bell, desc: "Dose reminders & quiet hours" },
-    { id: "privacy" as const, label: "Privacy & Sharing", icon: Lock, desc: "Caregiver permissions & encryption" },
-    { id: "data" as const, label: "Data & Backup", icon: Download, desc: "Personal records export & storage" },
-    { id: "account" as const, label: "Account & Support", icon: Sliders, desc: "Support, feedback & security" },
+    {
+      id: "appearance" as const,
+      label: "Appearance & Theme",
+      icon: Moon,
+      desc: "Color modes & typography scale",
+    },
+    {
+      id: "notifications" as const,
+      label: "Notifications & Alerts",
+      icon: Bell,
+      desc: "Dose reminders & quiet hours",
+    },
+    {
+      id: "privacy" as const,
+      label: "Privacy & Sharing",
+      icon: Lock,
+      desc: "Caregiver permissions & encryption",
+    },
+    {
+      id: "data" as const,
+      label: "Data & Backup",
+      icon: Download,
+      desc: "Personal records export & storage",
+    },
+    {
+      id: "account" as const,
+      label: "Account & Support",
+      icon: Sliders,
+      desc: "Support, feedback & security",
+    },
   ];
 
   return (
@@ -202,7 +227,8 @@ function Settings() {
                 <div>
                   <h2 className="font-serif text-lg font-bold text-foreground">Color Theme</h2>
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    Choose between the tailored Editorial Warm Ivory light theme and Luxury Obsidian dark theme.
+                    Choose between the tailored Editorial Warm Ivory light theme and Luxury Obsidian
+                    dark theme.
                   </p>
                 </div>
 
@@ -220,11 +246,11 @@ function Settings() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Sun className="size-4 text-amber-600" />
-                        <span className="text-xs font-bold text-foreground">Warm Ivory (Light)</span>
+                        <span className="text-xs font-bold text-foreground">
+                          Warm Ivory (Light)
+                        </span>
                       </div>
-                      {theme === "light" && (
-                        <CheckCircle2 className="size-4 text-primary" />
-                      )}
+                      {theme === "light" && <CheckCircle2 className="size-4 text-primary" />}
                     </div>
                     {/* Visual Preview */}
                     <div className="mt-3 overflow-hidden rounded-xl border border-border bg-[#F7F5F0] p-2.5 space-y-1.5">
@@ -250,11 +276,11 @@ function Settings() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Moon className="size-4 text-rose-400" />
-                        <span className="text-xs font-bold text-foreground">Obsidian Rose (Dark)</span>
+                        <span className="text-xs font-bold text-foreground">
+                          Obsidian Rose (Dark)
+                        </span>
                       </div>
-                      {theme === "dark" && (
-                        <CheckCircle2 className="size-4 text-primary" />
-                      )}
+                      {theme === "dark" && <CheckCircle2 className="size-4 text-primary" />}
                     </div>
                     {/* Visual Preview */}
                     <div className="mt-3 overflow-hidden rounded-xl border border-[#383033] bg-[#161314] p-2.5 space-y-1.5">
@@ -270,7 +296,9 @@ function Settings() {
 
                 <div className="border-t border-border/60 pt-4 flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <p className="text-xs font-semibold text-foreground">Comfort Typography Scale</p>
+                    <p className="text-xs font-semibold text-foreground">
+                      Comfort Typography Scale
+                    </p>
                     <p className="text-[11px] text-muted-foreground">
                       Enlarges medication dosage labels and touch targets for effortless reading.
                     </p>
@@ -289,9 +317,12 @@ function Settings() {
             <section className="space-y-6 animate-in fade-in">
               <div className="rounded-3xl border border-border/80 bg-card p-6 shadow-soft space-y-5">
                 <div>
-                  <h2 className="font-serif text-lg font-bold text-foreground">Notification Policy</h2>
+                  <h2 className="font-serif text-lg font-bold text-foreground">
+                    Notification Policy
+                  </h2>
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    DoseLoop enforces a strictly quiet device policy — zero marketing nudges, only essential care alerts.
+                    DoseLoop enforces a strictly quiet device policy — zero marketing nudges, only
+                    essential care alerts.
                   </p>
                 </div>
 
@@ -313,7 +344,8 @@ function Settings() {
                     <div className="space-y-0.5">
                       <p className="text-xs font-semibold text-foreground">Daily Morning Digest</p>
                       <p className="text-[11px] text-muted-foreground">
-                        Single daily summary at 8:00 AM recapping family adherence and hydration targets.
+                        Single daily summary at 8:00 AM recapping family adherence and hydration
+                        targets.
                       </p>
                     </div>
                     <Switch
@@ -324,9 +356,12 @@ function Settings() {
 
                   <div className="flex items-center justify-between rounded-2xl border border-border/50 bg-background/50 p-4">
                     <div className="space-y-0.5">
-                      <p className="text-xs font-semibold text-foreground">Critical Missed Escalation</p>
+                      <p className="text-xs font-semibold text-foreground">
+                        Critical Missed Escalation
+                      </p>
                       <p className="text-[11px] text-muted-foreground">
-                        Notify emergency contacts if a critical medication is unconfirmed 90 minutes after schedule.
+                        Notify emergency contacts if a critical medication is unconfirmed 90 minutes
+                        after schedule.
                       </p>
                     </div>
                     <Switch
@@ -344,18 +379,24 @@ function Settings() {
             <section className="space-y-6 animate-in fade-in">
               <div className="rounded-3xl border border-border/80 bg-card p-6 shadow-soft space-y-5">
                 <div>
-                  <h2 className="font-serif text-lg font-bold text-foreground">Consent & Caregiver Sharing</h2>
+                  <h2 className="font-serif text-lg font-bold text-foreground">
+                    Consent & Caregiver Sharing
+                  </h2>
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    Control the granularity of what your connected Family Circle members can observe.
+                    Control the granularity of what your connected Family Circle members can
+                    observe.
                   </p>
                 </div>
 
                 <div className="space-y-4 pt-1">
                   <div className="flex items-center justify-between rounded-2xl border border-border/50 bg-background/50 p-4">
                     <div className="space-y-0.5">
-                      <p className="text-xs font-semibold text-foreground">Synthesized Status Only</p>
+                      <p className="text-xs font-semibold text-foreground">
+                        Synthesized Status Only
+                      </p>
                       <p className="text-[11px] text-muted-foreground">
-                        Caregivers receive calm synthesized status ('On Track' / 'Needs check-in') rather than invasive raw logs.
+                        Caregivers receive calm synthesized status ('On Track' / 'Needs check-in')
+                        rather than invasive raw logs.
                       </p>
                     </div>
                     <Switch
@@ -366,7 +407,9 @@ function Settings() {
 
                   <div className="flex items-center justify-between rounded-2xl border border-border/50 bg-background/50 p-4">
                     <div className="space-y-0.5">
-                      <p className="text-xs font-semibold text-foreground">Share Wellness & Hydration</p>
+                      <p className="text-xs font-semibold text-foreground">
+                        Share Wellness & Hydration
+                      </p>
                       <p className="text-[11px] text-muted-foreground">
                         Permit caregivers to see water intake progress and daily energy/sleep logs.
                       </p>
@@ -381,7 +424,8 @@ function Settings() {
                 <div className="flex items-start gap-3 rounded-2xl border border-primary/20 bg-primary/5 p-4">
                   <Shield className="size-4 shrink-0 text-primary mt-0.5" />
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Zero clinical health data is sold or shared with third parties. Pulse AI conversations are processed in private ephemeral memory.
+                    Zero clinical health data is sold or shared with third parties. Pulse AI
+                    conversations are processed in private ephemeral memory.
                   </p>
                 </div>
               </div>
@@ -393,7 +437,9 @@ function Settings() {
             <section className="space-y-6 animate-in fade-in">
               <div className="rounded-3xl border border-border/80 bg-card p-6 shadow-soft space-y-5">
                 <div>
-                  <h2 className="font-serif text-lg font-bold text-foreground">Personal Health Records</h2>
+                  <h2 className="font-serif text-lg font-bold text-foreground">
+                    Personal Health Records
+                  </h2>
                   <p className="text-xs text-muted-foreground mt-0.5">
                     Your health data belongs entirely to you. Export complete JSON logs at any time.
                   </p>
@@ -402,9 +448,12 @@ function Settings() {
                 <div className="rounded-2xl border border-border/50 bg-background/50 p-4">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                      <p className="text-xs font-semibold text-foreground">Export Complete Records</p>
+                      <p className="text-xs font-semibold text-foreground">
+                        Export Complete Records
+                      </p>
                       <p className="text-[11px] text-muted-foreground">
-                        Includes active medication regimens, dose timestamps, hydration logs, and caregiver circle data.
+                        Includes active medication regimens, dose timestamps, hydration logs, and
+                        caregiver circle data.
                       </p>
                     </div>
                     <Button
@@ -440,7 +489,9 @@ function Settings() {
             <section className="space-y-6 animate-in fade-in">
               <div className="rounded-3xl border border-border/80 bg-card p-6 shadow-soft space-y-5">
                 <div>
-                  <h2 className="font-serif text-lg font-bold text-foreground">Account Actions & Support</h2>
+                  <h2 className="font-serif text-lg font-bold text-foreground">
+                    Account Actions & Support
+                  </h2>
                   <p className="text-xs text-muted-foreground mt-0.5">
                     Get in touch with our team or safely manage your active credentials.
                   </p>
@@ -467,7 +518,9 @@ function Settings() {
                   <div className="flex items-center justify-between rounded-2xl border border-border/50 bg-background/50 p-4">
                     <div>
                       <p className="text-xs font-semibold text-foreground">Active Session</p>
-                      <p className="text-[11px] text-muted-foreground">Signed in as {user?.email}</p>
+                      <p className="text-[11px] text-muted-foreground">
+                        Signed in as {user?.email}
+                      </p>
                     </div>
                     <Button
                       variant="ghost"
@@ -481,7 +534,9 @@ function Settings() {
 
                   <div className="flex items-center justify-between rounded-2xl border border-destructive/25 bg-destructive/[0.03] p-4">
                     <div>
-                      <p className="text-xs font-semibold text-destructive">Danger Zone: Delete Account</p>
+                      <p className="text-xs font-semibold text-destructive">
+                        Danger Zone: Delete Account
+                      </p>
                       <p className="text-[11px] text-muted-foreground">
                         Permanently purge your account, medications, and caregiver relationships.
                       </p>
@@ -498,9 +553,12 @@ function Settings() {
                       </AlertDialogTrigger>
                       <AlertDialogContent className="rounded-2xl border-border/80 bg-card">
                         <AlertDialogHeader>
-                          <AlertDialogTitle className="font-serif">Permanently Delete Account?</AlertDialogTitle>
+                          <AlertDialogTitle className="font-serif">
+                            Permanently Delete Account?
+                          </AlertDialogTitle>
                           <AlertDialogDescription>
-                            This action cannot be undone. All medication schedules, adherence logs, and family connections will be erased immediately.
+                            This action cannot be undone. All medication schedules, adherence logs,
+                            and family connections will be erased immediately.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>

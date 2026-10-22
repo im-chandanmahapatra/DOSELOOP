@@ -183,7 +183,10 @@ function Profile() {
                 <h1 className="font-serif text-2xl font-bold text-foreground">
                   {user?.firstName} {user?.lastName}
                 </h1>
-                <Badge variant="outline" className="border-border bg-background/60 text-xs font-semibold">
+                <Badge
+                  variant="outline"
+                  className="border-border bg-background/60 text-xs font-semibold"
+                >
                   {user?.plan || "Self-managing patient"}
                 </Badge>
               </div>
@@ -191,7 +194,8 @@ function Profile() {
                 <Mail className="size-3.5" /> {user?.email}
               </p>
               <p className="mt-0.5 text-[11px] text-muted-foreground">
-                DoseLoop ID: <code className="font-mono text-[10px]">{user?.id?.slice(0, 18)}…</code>
+                DoseLoop ID:{" "}
+                <code className="font-mono text-[10px]">{user?.id?.slice(0, 18)}…</code>
               </p>
             </div>
           </div>
@@ -252,13 +256,25 @@ function Profile() {
                     value={user?.email || ""}
                     className="rounded-xl bg-muted/40 cursor-not-allowed text-muted-foreground"
                   />
-                  <p className="text-[11px] text-muted-foreground">Email is managed by authentication provider.</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    Email is managed by authentication provider.
+                  </p>
                 </div>
                 <DialogFooter className="pt-2">
-                  <Button type="button" variant="ghost" className="rounded-xl" onClick={() => setEditOpen(false)}>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="rounded-xl"
+                    onClick={() => setEditOpen(false)}
+                  >
                     Cancel
                   </Button>
-                  <Button type="submit" variant="wine" className="rounded-xl" disabled={updateProfileMutation.isPending}>
+                  <Button
+                    type="submit"
+                    variant="wine"
+                    className="rounded-xl"
+                    disabled={updateProfileMutation.isPending}
+                  >
                     {updateProfileMutation.isPending ? "Saving…" : "Save Changes"}
                   </Button>
                 </DialogFooter>
@@ -316,7 +332,9 @@ function Profile() {
             <div className="flex items-center justify-between rounded-xl border border-border/50 bg-background/50 p-3">
               <div>
                 <p className="text-xs font-semibold text-foreground">Emergency Blood Type</p>
-                <p className="text-[11px] text-muted-foreground">Registered in Emergency Medical ID</p>
+                <p className="text-[11px] text-muted-foreground">
+                  Registered in Emergency Medical ID
+                </p>
               </div>
               <span className="font-mono text-sm font-bold text-primary">O+</span>
             </div>
@@ -332,9 +350,13 @@ function Profile() {
             <div className="flex items-center justify-between rounded-xl border border-border/50 bg-background/50 p-3">
               <div>
                 <p className="text-xs font-semibold text-foreground">Primary Physician</p>
-                <p className="text-[11px] text-muted-foreground">Dr. Rachel Thorne, MD (555-019-4821)</p>
+                <p className="text-[11px] text-muted-foreground">
+                  Dr. Rachel Thorne, MD (555-019-4821)
+                </p>
               </div>
-              <Badge variant="outline" className="text-[10px]">On File</Badge>
+              <Badge variant="outline" className="text-[10px]">
+                On File
+              </Badge>
             </div>
           </div>
         </section>
@@ -376,7 +398,9 @@ function Profile() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs font-semibold text-foreground">Sign Out of Session</p>
-                  <p className="text-[11px] text-muted-foreground">Safely end this active browser session.</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    Safely end this active browser session.
+                  </p>
                 </div>
                 <Button
                   variant="ghost"
@@ -409,9 +433,12 @@ function Profile() {
                   </AlertDialogTrigger>
                   <AlertDialogContent className="rounded-2xl border-border/80 bg-card">
                     <AlertDialogHeader>
-                      <AlertDialogTitle className="font-serif">Permanently Delete Account?</AlertDialogTitle>
+                      <AlertDialogTitle className="font-serif">
+                        Permanently Delete Account?
+                      </AlertDialogTitle>
                       <AlertDialogDescription>
-                        This action cannot be undone. All medication schedules, adherence records, and family circle relationships will be erased immediately.
+                        This action cannot be undone. All medication schedules, adherence records,
+                        and family circle relationships will be erased immediately.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>

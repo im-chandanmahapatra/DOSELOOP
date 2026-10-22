@@ -35,7 +35,7 @@ function getSpeechRecognitionConstructor(): SpeechRecognitionConstructor | null 
 }
 
 export function useSpeechRecognition(
-  options: UseSpeechRecognitionOptions = {}
+  options: UseSpeechRecognitionOptions = {},
 ): UseSpeechRecognitionReturn {
   const { lang = "en-IN", onFinalResult, onInterimResult, onError } = options;
 
@@ -157,7 +157,8 @@ export function useSpeechRecognition(
         let userMessage = "Speech recognition error occurred.";
         switch (errCode) {
           case "not-allowed":
-            userMessage = "Microphone access was denied. Please allow microphone access in your browser settings.";
+            userMessage =
+              "Microphone access was denied. Please allow microphone access in your browser settings.";
             break;
           case "service-not-allowed":
             userMessage = "Speech service is unavailable or disabled on this device.";

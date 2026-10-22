@@ -107,7 +107,12 @@ function Auth() {
         setErrorMsg("Authentication failed. Please verify your credentials.");
       }
     } catch (err: unknown) {
-      if (err && typeof err === "object" && "message" in err && (err as { message: string }).message.includes("Failed to fetch")) {
+      if (
+        err &&
+        typeof err === "object" &&
+        "message" in err &&
+        (err as { message: string }).message.includes("Failed to fetch")
+      ) {
         const nameToUse = firstName.trim() || email.split("@")[0] || "Aarav";
         loginLocal({
           id: `usr_${Date.now()}`,
@@ -117,7 +122,11 @@ function Auth() {
         });
         navigate({ to: "/dashboard" });
       } else {
-        setErrorMsg(err instanceof Error ? err.message : "Authentication failed. Please verify your credentials.");
+        setErrorMsg(
+          err instanceof Error
+            ? err.message
+            : "Authentication failed. Please verify your credentials.",
+        );
       }
     } finally {
       setIsLoading(false);
@@ -190,7 +199,9 @@ function Auth() {
             {isSignUp && (
               <div className="flex gap-4">
                 <div className="space-y-1.5 flex-1">
-                  <Label htmlFor="firstName" className="text-xs font-bold">First name</Label>
+                  <Label htmlFor="firstName" className="text-xs font-bold">
+                    First name
+                  </Label>
                   <Input
                     id="firstName"
                     type="text"
@@ -202,7 +213,9 @@ function Auth() {
                   />
                 </div>
                 <div className="space-y-1.5 flex-1">
-                  <Label htmlFor="lastName" className="text-xs font-bold">Last name</Label>
+                  <Label htmlFor="lastName" className="text-xs font-bold">
+                    Last name
+                  </Label>
                   <Input
                     id="lastName"
                     type="text"
@@ -216,7 +229,9 @@ function Auth() {
             )}
 
             <div className="space-y-1.5">
-              <Label htmlFor="email" className="text-xs font-bold">Email address</Label>
+              <Label htmlFor="email" className="text-xs font-bold">
+                Email address
+              </Label>
               <Input
                 id="email"
                 type="email"
@@ -229,7 +244,9 @@ function Auth() {
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="password" className="text-xs font-bold">Password</Label>
+              <Label htmlFor="password" className="text-xs font-bold">
+                Password
+              </Label>
               <Input
                 id="password"
                 type="password"
@@ -241,7 +258,13 @@ function Auth() {
                 className="rounded-xl"
               />
             </div>
-            <Button type="submit" variant="wine" size="lg" className="w-full rounded-2xl shadow-lift mt-2" disabled={isLoading}>
+            <Button
+              type="submit"
+              variant="wine"
+              size="lg"
+              className="w-full rounded-2xl shadow-lift mt-2"
+              disabled={isLoading}
+            >
               {isLoading ? "Signing in..." : isSignUp ? "Create Your Loop" : "Sign In to DoseLoop"}
             </Button>
 
@@ -293,8 +316,8 @@ function Auth() {
         <div className="relative max-w-md space-y-6">
           <Logo size="lg" />
           <blockquote className="font-serif text-3xl font-bold leading-snug text-sidebar-foreground">
-            "I stopped ending every call with 'did you remember your blood pressure pill?' — DoseLoop quietly tells
-            me Dad's doing well."
+            "I stopped ending every call with 'did you remember your blood pressure pill?' —
+            DoseLoop quietly tells me Dad's doing well."
           </blockquote>
           <div>
             <p className="font-bold text-sidebar-primary">Ananya Iyer</p>

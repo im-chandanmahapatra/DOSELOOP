@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- DoseLoop Brand Background: Refined Burgundy Wine -->
+  <rect width="32" height="32" rx="7.5" fill="#7A2E38"/>
+  <rect x="0.5" y="0.5" width="31" height="31" rx="7" stroke="#B89450" stroke-opacity="0.35" stroke-width="1" fill="none"/>
+  
+  <!-- Interrupted Ring (The Loop): A calm, never-broken cycle of care -->
+  <path
+    d="M 16 6.8 A 9.2 9.2 0 1 1 8.5 10.6"
+    stroke="#FFF8F0"
+    stroke-width="2.8"
+    stroke-linecap="round"
+  />
+  
+  <!-- Steady Center Dot -->
+  <circle cx="16" cy="16" r="3" fill="#FFF8F0"/>
+</svg>

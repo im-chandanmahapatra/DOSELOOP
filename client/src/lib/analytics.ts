@@ -8,7 +8,7 @@ export const initAnalytics = () => {
     console.warn("Analytics not initialized: VITE_GA_MEASUREMENT_ID is missing.");
     return;
   }
-  
+
   if (!isInitialized) {
     ReactGA.initialize(measurementId);
     isInitialized = true;
@@ -21,10 +21,7 @@ export const trackPageView = (path: string) => {
   }
 };
 
-export const trackEvent = (
-  eventName: string,
-  params?: Record<string, any>
-) => {
+export const trackEvent = (eventName: string, params?: Record<string, unknown>) => {
   if (isInitialized) {
     ReactGA.event(eventName, params);
   }

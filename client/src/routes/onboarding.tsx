@@ -1,6 +1,15 @@
 import { useState } from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, ArrowLeft, Pill, Users, Bell, Check, HeartPulse, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowLeft,
+  Pill,
+  Users,
+  Bell,
+  Check,
+  HeartPulse,
+  Sparkles,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -90,12 +99,20 @@ function Onboarding() {
             {step === 0 && (
               <div className="space-y-4 pt-2">
                 <div className="space-y-1.5">
-                  <Label htmlFor="name" className="text-xs font-bold">Your name</Label>
+                  <Label htmlFor="name" className="text-xs font-bold">
+                    Your name
+                  </Label>
                   <Input id="name" defaultValue="Aarav Sharma" className="rounded-xl" />
                 </div>
                 <div className="space-y-1.5">
-                  <Label htmlFor="role" className="text-xs font-bold">What brings you to DoseLoop?</Label>
-                  <Input id="role" defaultValue="Managing my daily health & reassuring my family" className="rounded-xl" />
+                  <Label htmlFor="role" className="text-xs font-bold">
+                    What brings you to DoseLoop?
+                  </Label>
+                  <Input
+                    id="role"
+                    defaultValue="Managing my daily health & reassuring my family"
+                    className="rounded-xl"
+                  />
                 </div>
               </div>
             )}
@@ -103,16 +120,32 @@ function Onboarding() {
             {step === 1 && (
               <div className="space-y-4 pt-2">
                 <div className="space-y-1.5">
-                  <Label htmlFor="med" className="text-xs font-bold">Medication name</Label>
-                  <Input id="med" placeholder="e.g. Lisinopril" defaultValue="Metformin" className="rounded-xl" />
+                  <Label htmlFor="med" className="text-xs font-bold">
+                    Medication name
+                  </Label>
+                  <Input
+                    id="med"
+                    placeholder="e.g. Lisinopril"
+                    defaultValue="Metformin"
+                    className="rounded-xl"
+                  />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <Label htmlFor="dose" className="text-xs font-bold">Dosage</Label>
-                    <Input id="dose" placeholder="500 mg" defaultValue="500 mg" className="rounded-xl" />
+                    <Label htmlFor="dose" className="text-xs font-bold">
+                      Dosage
+                    </Label>
+                    <Input
+                      id="dose"
+                      placeholder="500 mg"
+                      defaultValue="500 mg"
+                      className="rounded-xl"
+                    />
                   </div>
                   <div className="space-y-1.5">
-                    <Label htmlFor="time" className="text-xs font-bold">Time</Label>
+                    <Label htmlFor="time" className="text-xs font-bold">
+                      Time
+                    </Label>
                     <Input id="time" type="time" defaultValue="08:00" className="rounded-xl" />
                   </div>
                 </div>
@@ -124,7 +157,11 @@ function Onboarding() {
                 {[
                   { id: "push", label: "Push notifications", hint: "Gentle, one-tap to log" },
                   { id: "inapp", label: "In-app only", hint: "Quiet — check on your own time" },
-                  { id: "digest", label: "Daily digest only", hint: "One calm summary each morning" },
+                  {
+                    id: "digest",
+                    label: "Daily digest only",
+                    hint: "One calm summary each morning",
+                  },
                 ].map((opt) => (
                   <button
                     key={opt.id}
@@ -138,7 +175,9 @@ function Onboarding() {
                     )}
                   >
                     <span>
-                      <span className="block font-serif font-bold text-sm text-foreground">{opt.label}</span>
+                      <span className="block font-serif font-bold text-sm text-foreground">
+                        {opt.label}
+                      </span>
                       <span className="block text-xs text-muted-foreground">{opt.hint}</span>
                     </span>
                     {reminder === opt.id && (
@@ -160,18 +199,28 @@ function Onboarding() {
                   Your care loop is active!
                 </h3>
                 <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">
-                  Your first gentle reminder is scheduled for 8:00 AM tomorrow. We keep it serene — promise.
+                  Your first gentle reminder is scheduled for 8:00 AM tomorrow. We keep it serene —
+                  promise.
                 </p>
               </div>
             )}
 
             <div className="flex items-center gap-3 pt-4 border-t border-border/60">
               {step > 0 && (
-                <Button variant="ghost" onClick={() => setStep((s) => s - 1)} className="rounded-xl">
+                <Button
+                  variant="ghost"
+                  onClick={() => setStep((s) => s - 1)}
+                  className="rounded-xl"
+                >
                   <ArrowLeft className="size-4 mr-1" /> Back
                 </Button>
               )}
-              <Button onClick={next} variant="wine" size="lg" className="ml-auto rounded-2xl shadow-soft">
+              <Button
+                onClick={next}
+                variant="wine"
+                size="lg"
+                className="ml-auto rounded-2xl shadow-soft"
+              >
                 {last ? "Enter Today's Dashboard" : "Continue"}
                 <ArrowRight className="size-4 ml-1" />
               </Button>

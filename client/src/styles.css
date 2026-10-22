@@ -112,82 +112,82 @@
   color-scheme: light;
 
   /* Core surfaces — note the intentional warmth and variety */
-  --background: #FAF7F2;         /* Warm ivory — main page canvas */
-  --foreground: #2A2226;         /* Deep wine-charcoal — primary text, NOT pure black */
+  --background: #faf7f2; /* Warm ivory — main page canvas */
+  --foreground: #2a2226; /* Deep wine-charcoal — primary text, NOT pure black */
 
-  --card: #FFFDF9;               /* Creamy white — elevated card surface */
-  --card-foreground: #2A2226;
+  --card: #fffdf9; /* Creamy white — elevated card surface */
+  --card-foreground: #2a2226;
 
-  --popover: #FFFDF9;
-  --popover-foreground: #2A2226;
+  --popover: #fffdf9;
+  --popover-foreground: #2a2226;
 
   /* Brand primary — refined burgundy wine */
-  --primary: #7A2E38;            /* Deep burgundy — main brand, buttons, active states */
-  --primary-foreground: #FFF8F0; /* Warm white on burgundy */
-  --primary-deep: #4B2028;       /* Deep wine — used for emphasis, sidebar */
+  --primary: #7a2e38; /* Deep burgundy — main brand, buttons, active states */
+  --primary-foreground: #fff8f0; /* Warm white on burgundy */
+  --primary-deep: #4b2028; /* Deep wine — used for emphasis, sidebar */
 
   /* Secondary surface — warm sand */
-  --secondary: #F0E9E0;          /* Warm linen surface */
-  --secondary-foreground: #4B2028;
+  --secondary: #f0e9e0; /* Warm linen surface */
+  --secondary-foreground: #4b2028;
 
   /* Muted surface — soft warm tone */
-  --muted: #EBE5DC;              /* Soft warm muted background */
-  --muted-foreground: #7A6E6F;   /* Warm grey secondary text — NOT cold grey */
+  --muted: #ebe5dc; /* Soft warm muted background */
+  --muted-foreground: #7a6e6f; /* Warm grey secondary text — NOT cold grey */
 
   /* Accent — restrained antique gold */
-  --accent: #B89450;             /* Rich antique gold */
-  --accent-foreground: #2C1F0A;
+  --accent: #b89450; /* Rich antique gold */
+  --accent-foreground: #2c1f0a;
 
   /* Borders — warm and visible */
-  --border: #E2D9CE;             /* Warm border — subtle but present */
-  --input: #E2D9CE;
-  --ring: #7A2E38;
+  --border: #e2d9ce; /* Warm border — subtle but present */
+  --input: #e2d9ce;
+  --ring: #7a2e38;
 
   /* Rich contextual surfaces — these make the UI feel alive */
-  --rose: #F5E4E6;               /* Soft rose surface for medication/health highlights */
-  --rose-foreground: #5C1D24;
+  --rose: #f5e4e6; /* Soft rose surface for medication/health highlights */
+  --rose-foreground: #5c1d24;
 
-  --sky: #E3EEF6;                /* Cool sky surface for hydration/info */
-  --sky-foreground: #1A435E;
+  --sky: #e3eef6; /* Cool sky surface for hydration/info */
+  --sky-foreground: #1a435e;
 
-  --lavender: #EBE4F4;           /* Gentle lavender for AI/assistant areas */
+  --lavender: #ebe4f4; /* Gentle lavender for AI/assistant areas */
   --lavender-foreground: #352650;
 
-  --sage: #E2EDDF;               /* Sage green for success/completion surfaces */
-  --sage-foreground: #1B4D36;
+  --sage: #e2eddf; /* Sage green for success/completion surfaces */
+  --sage-foreground: #1b4d36;
 
-  --gold: #B89450;
-  --gold-foreground: #2C1F0A;
+  --gold: #b89450;
+  --gold-foreground: #2c1f0a;
 
   /* Status colors — warm and purposeful, never alarmist */
-  --destructive: #A42B2B;        /* Warm cherry red */
-  --destructive-foreground: #FFFFFF;
+  --destructive: #a42b2b; /* Warm cherry red */
+  --destructive-foreground: #ffffff;
 
-  --success: #2B7050;            /* Rich sage green */
-  --success-foreground: #FFFFFF;
+  --success: #2b7050; /* Rich sage green */
+  --success-foreground: #ffffff;
 
-  --warning: #B89450;
-  --warning-foreground: #2C1F0A;
+  --warning: #b89450;
+  --warning-foreground: #2c1f0a;
 
-  --info: #2A5A78;
-  --info-foreground: #FFFFFF;
+  --info: #2a5a78;
+  --info-foreground: #ffffff;
 
   /* Chart palette — wine, sage, gold, sky, lavender */
-  --chart-1: #7A2E38;
-  --chart-2: #2B7050;
-  --chart-3: #B89450;
-  --chart-4: #4388B8;
-  --chart-5: #8C78A8;
+  --chart-1: #7a2e38;
+  --chart-2: #2b7050;
+  --chart-3: #b89450;
+  --chart-4: #4388b8;
+  --chart-5: #8c78a8;
 
   /* Sidebar / navigation rail — deep wine surface */
-  --sidebar: #4B2028;            /* Deep wine — premium sidebar */
-  --sidebar-foreground: #F5E4E6;
-  --sidebar-primary: #E8868E;    /* Rose accent on dark sidebar */
-  --sidebar-primary-foreground: #280B10;
-  --sidebar-accent: #5A2730;     /* Lighter wine hover */
-  --sidebar-accent-foreground: #F5E4E6;
-  --sidebar-border: #6B3040;
-  --sidebar-ring: #E8868E;
+  --sidebar: #4b2028; /* Deep wine — premium sidebar */
+  --sidebar-foreground: #f5e4e6;
+  --sidebar-primary: #e8868e; /* Rose accent on dark sidebar */
+  --sidebar-primary-foreground: #280b10;
+  --sidebar-accent: #5a2730; /* Lighter wine hover */
+  --sidebar-accent-foreground: #f5e4e6;
+  --sidebar-border: #6b3040;
+  --sidebar-ring: #e8868e;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -200,75 +200,75 @@
 .dark {
   color-scheme: dark;
 
-  --background: #14100F;         /* Deep warm obsidian — NOT cold grey */
-  --foreground: #F5EDE5;         /* Warm cream text — NOT pure white */
+  --background: #14100f; /* Deep warm obsidian — NOT cold grey */
+  --foreground: #f5ede5; /* Warm cream text — NOT pure white */
 
-  --card: #1E1918;               /* Elevated warm charcoal */
-  --card-foreground: #F5EDE5;
+  --card: #1e1918; /* Elevated warm charcoal */
+  --card-foreground: #f5ede5;
 
-  --popover: #1E1918;
-  --popover-foreground: #F5EDE5;
+  --popover: #1e1918;
+  --popover-foreground: #f5ede5;
 
-  --primary: #E8868E;            /* Rose-wine accent — warm and visible */
-  --primary-foreground: #280B10;
-  --primary-deep: #3B1A1E;       /* Deep wine panel */
+  --primary: #e8868e; /* Rose-wine accent — warm and visible */
+  --primary-foreground: #280b10;
+  --primary-deep: #3b1a1e; /* Deep wine panel */
 
-  --secondary: #2A2424;          /* Warm charcoal secondary surface */
-  --secondary-foreground: #F5EDE5;
+  --secondary: #2a2424; /* Warm charcoal secondary surface */
+  --secondary-foreground: #f5ede5;
 
-  --muted: #322A2C;              /* Warm muted surface */
-  --muted-foreground: #A8969A;   /* Warm muted text */
+  --muted: #322a2c; /* Warm muted surface */
+  --muted-foreground: #a8969a; /* Warm muted text */
 
-  --accent: #DFC085;             /* Soft antique gold */
-  --accent-foreground: #241A0B;
+  --accent: #dfc085; /* Soft antique gold */
+  --accent-foreground: #241a0b;
 
-  --border: #3D3234;             /* Warm distinguishable border */
-  --input: #3D3234;
-  --ring: #E8868E;
+  --border: #3d3234; /* Warm distinguishable border */
+  --input: #3d3234;
+  --ring: #e8868e;
 
   /* Dark mode contextual surfaces — tinted, not just darker grey */
-  --rose: #2E1A1D;               /* Deep rose tint */
-  --rose-foreground: #F6CCD0;
+  --rose: #2e1a1d; /* Deep rose tint */
+  --rose-foreground: #f6ccd0;
 
-  --sky: #162A38;                /* Deep sky tint */
-  --sky-foreground: #CFE2F0;
+  --sky: #162a38; /* Deep sky tint */
+  --sky-foreground: #cfe2f0;
 
-  --lavender: #281F36;           /* Deep lavender tint */
-  --lavender-foreground: #E2D9EE;
+  --lavender: #281f36; /* Deep lavender tint */
+  --lavender-foreground: #e2d9ee;
 
-  --sage: #162B1F;               /* Deep sage tint */
-  --sage-foreground: #C7E6D4;
+  --sage: #162b1f; /* Deep sage tint */
+  --sage-foreground: #c7e6d4;
 
   --gold: #362814;
-  --gold-foreground: #E8D5B5;
+  --gold-foreground: #e8d5b5;
 
-  --destructive: #F28482;        /* Soft cherry red */
-  --destructive-foreground: #280B10;
+  --destructive: #f28482; /* Soft cherry red */
+  --destructive-foreground: #280b10;
 
-  --success: #4EBA88;            /* Vibrant sage */
-  --success-foreground: #0A2416;
+  --success: #4eba88; /* Vibrant sage */
+  --success-foreground: #0a2416;
 
-  --warning: #DFC085;
-  --warning-foreground: #241A0B;
+  --warning: #dfc085;
+  --warning-foreground: #241a0b;
 
-  --info: #6BA8E5;
-  --info-foreground: #0E2235;
+  --info: #6ba8e5;
+  --info-foreground: #0e2235;
 
-  --chart-1: #E8868E;
-  --chart-2: #4EBA88;
-  --chart-3: #DFC085;
-  --chart-4: #6BA8E5;
-  --chart-5: #B8A9D9;
+  --chart-1: #e8868e;
+  --chart-2: #4eba88;
+  --chart-3: #dfc085;
+  --chart-4: #6ba8e5;
+  --chart-5: #b8a9d9;
 
   /* Dark sidebar — deepest surface */
-  --sidebar: #110D0C;
-  --sidebar-foreground: #F5EDE5;
-  --sidebar-primary: #E8868E;
-  --sidebar-primary-foreground: #280B10;
-  --sidebar-accent: #251E1D;
-  --sidebar-accent-foreground: #F5EDE5;
-  --sidebar-border: #3D3234;
-  --sidebar-ring: #E8868E;
+  --sidebar: #110d0c;
+  --sidebar-foreground: #f5ede5;
+  --sidebar-primary: #e8868e;
+  --sidebar-primary-foreground: #280b10;
+  --sidebar-accent: #251e1d;
+  --sidebar-accent-foreground: #f5ede5;
+  --sidebar-border: #3d3234;
+  --sidebar-ring: #e8868e;
 
   /* Dark mode shadows — cooler with wine undertone */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -434,11 +434,7 @@
 
 /* Wine gradient — premium branded surface */
 @utility surface-wine-gradient {
-  background: linear-gradient(
-    135deg,
-    var(--color-primary-deep) 0%,
-    var(--color-primary) 100%
-  );
+  background: linear-gradient(135deg, var(--color-primary-deep) 0%, var(--color-primary) 100%);
   color: var(--color-primary-foreground);
 }
 
