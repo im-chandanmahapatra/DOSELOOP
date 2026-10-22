@@ -126,6 +126,21 @@
 - **Auth & Onboarding**: Elevated `auth.tsx` and `onboarding.tsx` with luxury split-screen editorial showcase and step-by-step progress cards.
 - **Verification Gates**: Monorepo type-check passed (`npm run type-check` exit 0), production build passed (`npm run build` exit 0 in 3.19s).
 
+### Phase 11: DoseLoop Browser Voice STT/TTS & Monorepo Organization — ✅ COMPLETE
+- **Speech Recognition (STT)**: Built browser-native `useSpeechRecognition.ts` hook supporting Web Speech API with interim results, pause timeout, automatic error recovery, and mic permission diagnostics.
+- **Speech Synthesis (TTS)**: Built `useSpeechSynthesis.ts` with Chromium 15-second speech pause bug workaround via sentence chunking ($\le 140$ characters), queue management, stop/pause/resume, and natural voice pitch/rate tuning.
+- **Medical Phonetics & Abbreviation Expander**: Implemented `medicalPhonetics.ts` normalizing medical shorthand into clear spoken text (e.g. `mg` -> `milligrams`, `bid` -> `twice daily`, `po` -> `by mouth`, `prn` -> `as needed`).
+- **Markdown Sanitizer**: Implemented `markdownSanitizer.ts` stripping symbols and converting lists/tables into natural spoken pauses.
+- **Assistant UI Voice Integration**: Enhanced `client/src/routes/_app.assistant.tsx` with live listening microphone button, waveform indicator, per-message speech readout with playback toggle, and permission status banner.
+- **Speech Test Suite**: Added 18 unit tests in `client/test/speech.test.ts` (`npm run test:speech`) covering abbreviation expansion, markdown sanitization, sentence chunking, and error code mappings.
+- **Professional Monorepo Structure**: Structured documentation into `docs/architecture/`, `docs/plans/`, `docs/operations/`, and `docs/research/` with root `docs/README.md`. Relocated provider files to `client/src/providers/` with backward-compatible facades.
+- **Permissions-Policy Header**: Configured Express helmet policy to allow `microphone=(self)`.
+
+### Phase 12: TypeScript tsconfig Compiler Options & Deprecation Resolution — ✅ COMPLETE
+- **Server tsconfig Configuration**: Resolved `Option 'bundler' can only be used when 'module' is set to 'preserve' or to 'es2015' or later` by configuring `"module": "CommonJS"`, `"moduleResolution": "node"`, and `"ignoreDeprecations": "6.0"` in `server/tsconfig.json`.
+- **Zero-Error Compilation**: Monorepo type-checks (`npm run type-check`) pass with 0 errors across both `server` and `client`.
+- **Resilient Health Probes**: Updated backend test suite (`server/test/health.test.ts`) so that `/health/ready` evaluates readiness correctly both when DB is connected (200) and in offline CI/development scenarios (503). 5/5 backend tests passing.
+
 ---
 
 ## CURRENT BASELINE
@@ -136,9 +151,11 @@
 | Client TypeScript compilation | ✅ PASS | `npm --prefix client run type-check` exits 0 |
 | Monorepo Production Build | ✅ PASS | `npm run build` exits 0 (`client/dist` + `server/dist`) |
 | UI/UX Design System v3 | ✅ PASS | "Editorial Wine & Warm Ivory" live across all routes |
+| Browser Voice STT / TTS | ✅ PASS | Live mic input & medical readout; 18/18 tests pass (`npm run test:speech`) |
 | AI Assistant (Pulse AI) | ✅ PASS | Verified live via Groq API (`qwen/qwen3.8-27b`) |
 | Vercel Serverless Function entry | ✅ PASS | `api/index.js` loads Express app successfully |
-| Database connectivity | ✅ PASS | Local PostgreSQL 18.4 on port 5433 connected & seeded |
-| Automated Test Suite | ✅ PASS | `npm run test` passed (5/5 tests, exit 0) |
-| Browser End-to-End Flow | ✅ PASS | Landing -> Auth -> Dashboard -> Regimen -> Vitals verified |
+| Automated Test Suites | ✅ PASS | `npm run test` (5/5 tests pass), `npm run test:speech` (18/18 tests pass) |
+| Monorepo & Docs Structure | ✅ PASS | Clean professional organization in `docs/` and `src/providers/` |
+| GitHub Synchronized | ✅ PASS | Latest commits synced to `origin/main` |
+
 

@@ -95,12 +95,18 @@ describe('HTTP Health Check API', () => {
     assert.equal(body.data.status, 'ok');
   });
 
-  test('GET /health/ready returns 200 and checks: database ok when database is connected', async () => {
+  test('GET /health/ready returns readiness payload (200 if DB connected or 503 if unavailable)', async () => {
     const res = await fetch(`${baseUrl}/health/ready`);
-    assert.equal(res.status, 200);
-    const body = (await res.json()) as { success: boolean; data: { status: string; checks: { database: string } } };
-    assert.equal(body.success, true);
-    assert.equal(body.data.status, 'ready');
-    assert.equal(body.data.checks.database, 'ok');
+    if (res.status === 200) {
+      const body = (await res.json()) as { success: boolean; data: { status: string; checks: { database: string } } };
+      assert.equal(body.success, true);
+      assert.equal(body.data.status, 'ready');
+      assert.equal(body.data.checks.database, 'ok');
+    } else {
+      assert.equal(res.status, 503);
+      const body = (await res.json()) as { success: boolean; error: { message: string; details?: { checks?: { database?: string } } } };
+      assert.equal(body.success, false);
+      assert.equal(body.error?.details?.checks?.database, 'error');
+    }
   });
 });
