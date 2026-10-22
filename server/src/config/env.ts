@@ -54,6 +54,7 @@ const envSchema = z.object({
       (val) => val === undefined || val !== 'gsk_your_groq_api_key_here',
       'GROQ_API_KEY still contains the placeholder value — replace it with your real key',
     ),
+  GROQ_MODEL: z.string().default('qwen/qwen3.8-27b'),
 
   // Resend (email)
   RESEND_API_KEY: z.string().optional(),

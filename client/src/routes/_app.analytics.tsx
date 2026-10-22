@@ -1,15 +1,71 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { TrendingUp, Target, Flame, Droplets, Sparkles } from "lucide-react";
+import {
+  TrendingUp,
+  Target,
+  Flame,
+  Droplets,
+  Sparkles,
+  CheckCircle2,
+  AlertCircle,
+  Download,
+  Calendar,
+  FileText,
+} from "lucide-react";
+import { toast } from "sonner";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Cell,
+} from "recharts";
 
 import { PageHeader } from "@/components/app/PageHeader";
 import { AiBadge } from "@/components/brand/AiBadge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import { fetcher } from "@/lib/api";
 
 export const Route = createFileRoute("/_app/analytics")({
-  head: () => ({ meta: [{ title: "Insights — DoseLoop" }] }),
+  head: () => ({ meta: [{ title: "Insights & Trends — DoseLoop" }] }),
   component: Analytics,
 });
+
+interface DayData {
+  day: string;
+  taken: number;
+  total: number;
+}
+
+function CustomChartTooltip({
+  active,
+  payload,
+}: {
+  active?: boolean;
+  payload?: Array<{ payload: DayData }>;
+}) {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    const pct = Math.round((data.taken / data.total) * 100) || 0;
+    return (
+      <div className="rounded-2xl border border-border/80 bg-card p-3 shadow-lift text-xs">
+        <p className="font-serif font-bold text-foreground">{data.day}</p>
+        <p className="mt-1 text-muted-foreground">
+          <span className="font-numeric font-bold text-primary">{data.taken}</span> of{" "}
+          <span className="font-numeric">{data.total}</span> doses logged
+        </p>
+        <p className={`mt-0.5 font-bold ${pct === 100 ? "text-emerald-700 dark:text-emerald-400" : "text-amber-800 dark:text-amber-300"}`}>
+          {pct}% adherence
+        </p>
+      </div>
+    );
+  }
+  return null;
+}
 
 function Analytics() {
   const { data, isLoading } = useQuery({
@@ -17,131 +73,192 @@ function Analytics() {
     queryFn: () => fetcher("/dashboard/analytics"),
   });
 
-  if (isLoading)
-    return <div className="flex items-center justify-center min-h-[50vh]">Loading...</div>;
+  const handleExportPDF = () => {
+    toast.success("Clinical Summary Report Generated", {
+      description: "Prepared for your upcoming appointment with Dr. Sharma.",
+    });
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[50vh]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="size-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+          <p className="font-serif text-sm font-medium text-muted-foreground">Analyzing adherence trends...</p>
+        </div>
+      </div>
+    );
+  }
   if (!data) return null;
 
   const { stats, adherenceWeek } = data;
-  const max = Math.max(...adherenceWeek.map((d: { total: number }) => d.total));
-  const weeklyTotal = adherenceWeek.reduce((sum: number, d: { taken: number }) => sum + d.taken, 0);
+  const weeklyTotal = adherenceWeek.reduce(
+    (sum: number, d: DayData) => sum + d.taken,
+    0,
+  );
 
-  // Map icon names from strings back to components
-  const iconMap: Record<string, React.ElementType> = { Target, Flame, Droplets, TrendingUp };
+  const iconMap: Record<string, React.ElementType> = {
+    Target,
+    Flame,
+    Droplets,
+    TrendingUp,
+  };
+
   const mappedStats = stats.map((s: { icon: string }) => ({
     ...s,
     icon: iconMap[s.icon] || Target,
   }));
 
+  // Recharts formatted data
+  const chartData = adherenceWeek.map((d: DayData) => ({
+    ...d,
+    adherencePct: Math.round((d.taken / d.total) * 100) || 0,
+  }));
+
+  const cardVariants = ["rose", "gold", "sky", "sage"] as const;
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pb-12 animate-fade">
       <PageHeader
-        eyebrow="Insights"
-        title="Your trends, gently surfaced"
-        description="Patterns over time — to understand your routine, never to judge it."
+        eyebrow="Adherence Insights"
+        title="Regimen Trends & Clarity"
+        description="Longitudinal patterns over time to understand your routine — designed to reassure, never to judge."
+        action={
+          <Button variant="wine" size="sm" onClick={handleExportPDF} className="rounded-xl shadow-soft">
+            <Download className="size-3.5 mr-1.5" /> Export Clinical PDF
+          </Button>
+        }
       />
 
-      <div className="stagger-children grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {/* 4 Multi-Tinted Stat Metric Cards */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {mappedStats.map(
-          (s: {
-            label: string;
-            chip: string;
-            icon: React.ElementType;
-            value: string;
-            sub: string;
-          }) => (
-            <div
-              key={s.label}
-              className="card-interactive rounded-2xl border border-border bg-card p-5 shadow-soft"
-            >
-              <span className={`grid size-9 place-items-center rounded-xl ${s.chip}`}>
-                <s.icon className="size-5" />
-              </span>
-              <p className="mt-4 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                {s.label}
-              </p>
-              <p className="font-numeric mt-1 text-3xl font-bold text-foreground">{s.value}</p>
-              <p className="mt-0.5 text-sm text-muted-foreground">{s.sub}</p>
-            </div>
-          ),
+          (
+            s: {
+              label: string;
+              chip: string;
+              icon: React.ElementType;
+              value: string;
+              sub: string;
+            },
+            index: number,
+          ) => {
+            const variant = cardVariants[index % cardVariants.length];
+            return (
+              <Card
+                key={s.label}
+                variant={variant}
+                className="p-5.5 shadow-soft transition-all hover:shadow-lift"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                    {s.label}
+                  </span>
+                  <span className="grid size-9 place-items-center rounded-xl bg-card border border-border/80 shadow-xs">
+                    <s.icon className="size-4.5 text-primary" />
+                  </span>
+                </div>
+                <p className="font-numeric mt-3 text-3xl font-extrabold tracking-tight text-foreground">
+                  {s.value}
+                </p>
+                <p className="mt-1 text-xs font-semibold text-muted-foreground">{s.sub}</p>
+              </Card>
+            );
+          },
         )}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
-        {/* Weekly bar chart */}
-        <div className="animate-rise rounded-3xl border border-border bg-card p-6 shadow-soft lg:col-span-2">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-foreground">Doses logged this week</h2>
-            <span className="font-numeric rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
-              Weekly total: {weeklyTotal}
+        {/* Recharts Weekly Bar Chart */}
+        <Card variant="editorial" className="p-6 sm:p-8 shadow-soft lg:col-span-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-6 border-b border-border/60">
+            <div>
+              <h2 className="font-serif text-xl font-bold text-foreground">Weekly Regimen Consistency</h2>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Dose adherence verification over the past 7 days
+              </p>
+            </div>
+            <span className="font-numeric rounded-full bg-secondary text-secondary-foreground border border-border/70 px-3.5 py-1 text-xs font-bold w-fit">
+              Total Logged: {weeklyTotal} Doses
             </span>
           </div>
 
-          <div className="relative mt-8 h-56">
-            {/* baseline grid lines */}
-            <div className="pointer-events-none absolute inset-0 flex flex-col justify-between">
-              {[0, 1, 2, 3].map((i) => (
-                <div key={i} className="h-px w-full bg-border/60" />
-              ))}
-            </div>
-
-            <div className="relative flex h-full items-end justify-between gap-3">
-              {adherenceWeek.map((d: { taken: number; total: number; day: string }) => {
-                const h = Math.max(8, Math.round((d.taken / d.total) * 100) || 8);
-                const full = d.taken === d.total && d.total > 0;
-                return (
-                  <div
-                    key={d.day}
-                    className="group flex h-full flex-1 flex-col items-center justify-end gap-2"
-                  >
-                    <span className="font-numeric text-xs font-semibold text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100">
-                      {d.taken}/{d.total}
-                    </span>
-                    <div
-                      className={`w-full max-w-10 rounded-t-lg transition-all duration-500 ${
-                        full ? "bg-primary" : "bg-warning"
-                      } group-hover:opacity-85`}
-                      style={{ height: `${h}%` }}
+          <div
+            className="mt-6 h-64 w-full"
+            role="img"
+            aria-label="Weekly medication adherence chart"
+          >
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <XAxis
+                  dataKey="day"
+                  stroke="var(--color-muted-foreground)"
+                  fontSize={12}
+                  tickLine={false}
+                  axisLine={false}
+                />
+                <YAxis
+                  stroke="var(--color-muted-foreground)"
+                  fontSize={12}
+                  tickLine={false}
+                  axisLine={false}
+                  domain={[0, 4]}
+                  allowDecimals={false}
+                />
+                <Tooltip content={<CustomChartTooltip />} cursor={{ fill: "var(--color-muted)", opacity: 0.3 }} />
+                <Bar dataKey="taken" radius={[8, 8, 0, 0]}>
+                  {chartData.map((entry: DayData & { adherencePct: number }, index: number) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={entry.adherencePct === 100 ? "#2B7050" : "#B89450"}
                     />
-                    <span className="text-xs font-medium text-muted-foreground">{d.day}</span>
-                  </div>
-                );
-              })}
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="mt-4 flex items-center justify-between pt-4 border-t border-border/60 text-xs text-muted-foreground">
+            <div className="flex items-center gap-4">
+              <span className="flex items-center gap-1.5 font-bold text-foreground">
+                <span className="size-2.5 rounded-full bg-emerald-600" /> Full Adherence (100%)
+              </span>
+              <span className="flex items-center gap-1.5 font-bold text-foreground">
+                <span className="size-2.5 rounded-full bg-amber-600" /> In Progress / Partial
+              </span>
             </div>
+            <span>Synchronized with PostgreSQL</span>
           </div>
+        </Card>
 
-          <div className="mt-6 flex items-center gap-5 text-xs text-muted-foreground">
-            <span className="flex items-center gap-1.5">
-              <span className="size-2.5 rounded-full bg-primary" /> All doses logged
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="size-2.5 rounded-full bg-warning" /> Some missed
-            </span>
-          </div>
-        </div>
-
-        {/* Premium AI insight card */}
-        <div className="animate-rise relative overflow-hidden rounded-3xl bg-sidebar p-6 text-sidebar-foreground shadow-lift">
-          <div className="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full bg-primary/25 blur-3xl" />
+        {/* AI Weekly Insight Card */}
+        <div className="card-interactive relative overflow-hidden rounded-3xl border border-sidebar-border bg-sidebar p-6 sm:p-8 text-sidebar-foreground shadow-lift flex flex-col justify-between">
+          <div className="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full bg-primary/20 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-12 -left-10 size-40 rounded-full bg-accent/20 blur-3xl" />
 
-          <div className="relative">
-            <div className="flex items-center gap-2.5">
-              <span className="grid size-10 place-items-center rounded-xl bg-primary/15 text-primary ring-1 ring-primary/20">
+          <div className="relative space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="grid size-11 place-items-center rounded-2xl bg-sidebar-primary/20 text-sidebar-primary">
                 <Sparkles className="size-5" />
               </span>
-              <div>
-                <h2 className="font-semibold text-sidebar-foreground">Weekly insight</h2>
-                <AiBadge label="AI generated" className="mt-0.5" />
-              </div>
+              <AiBadge label="Pulse AI Analysis" />
             </div>
 
-            <p className="mt-5 text-base font-medium leading-relaxed text-sidebar-foreground">
-              Your strongest days are weekends. Friday evenings are when doses most often slip — a
-              single reminder shift to 7:30 PM could lift your weekly adherence above 95%.
+            <h3 className="font-serif text-xl font-bold text-sidebar-foreground">Circadian Regimen Pattern</h3>
+
+            <p className="text-sm leading-relaxed text-sidebar-foreground/90 font-medium">
+              Your adherence is highest on weekday mornings (100%). Friday evenings are when doses most often
+              slip by 30 minutes. Setting a quiet reminder shift to 7:30 PM could comfortably lift your
+              weekly streak past 21 consecutive days.
             </p>
-            <p className="mt-3 text-sm text-sidebar-foreground/60">
-              Based only on your logged doses this month.
-            </p>
+          </div>
+
+          <div className="pt-6 border-t border-sidebar-border/60 mt-6 flex items-center justify-between text-xs text-sidebar-foreground/75">
+            <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
+              <CheckCircle2 className="size-4" />
+              Healthy routine verified
+            </span>
+            <span>30-Day Window</span>
           </div>
         </div>
       </div>

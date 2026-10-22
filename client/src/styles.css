@@ -5,24 +5,21 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * DoseLoop Design System — v2 "Quiet Premium"
- * Visual contract derived from PRODUCT.md principles, elevated toward the
- * craftsmanship of Apple Health, Linear, Notion and Arc:
- *  - "Peace of mind is the product" -> calm, balanced, low-arousal palette
- *  - "Calm over clever" -> generous whitespace, layered depth, restrained motion
- *  - Accessibility-first (Grace, 71) -> high contrast, large tap targets, legible type
+ * DoseLoop Design System — v3 "Editorial Wine & Warm Ivory"
  *
- * Palette intent (original to DoseLoop, no pink/purple/AI aesthetics):
- *  - Background: warm balanced paper (not clinical white)
- *  - Primary: deep desaturated pine-teal (trust, clinical calm, longevity)
- *  - Accent: refined warm brass/sand (human warmth without sweetness)
- *  - Status: muted sage (on-track), amber (attention), clay (missed) — never alarmist
+ * A premium, art-directed visual system for a digital health product.
+ * Inspired by editorial magazine layouts, luxury wellness brands,
+ * and the calm sophistication of Apple Health + Linear + Notion.
+ *
+ * Typography: Fraunces (editorial serif) + Plus Jakarta Sans (display) + Inter (body)
+ * Palette: Burgundy / Wine / Cherry / Ivory / Sky / Lavender / Sage / Gold
  */
 
 @theme inline {
   --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-numeric: "IBM Plex Sans", "Inter", system-ui, sans-serif;
+  --font-serif: "Fraunces", "Georgia", serif;
 
   --radius-sm: calc(var(--radius) - 6px);
   --radius-md: calc(var(--radius) - 3px);
@@ -62,6 +59,12 @@
   --color-lavender: var(--lavender);
   --color-lavender-foreground: var(--lavender-foreground);
 
+  --color-rose: var(--rose);
+  --color-rose-foreground: var(--rose-foreground);
+
+  --color-sage: var(--sage);
+  --color-sage-foreground: var(--sage-foreground);
+
   --color-gold: var(--gold);
   --color-gold-foreground: var(--gold-foreground);
 
@@ -70,6 +73,11 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
+  --color-primary-deep: var(--primary-deep);
+  --color-sky: var(--sky);
+  --color-sky-foreground: var(--sky-foreground);
+  --color-paper: var(--background);
 
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
@@ -80,145 +88,199 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Layered, neutral-tinted shadow scale for tasteful depth */
-  --shadow-xs: 0 1px 2px oklch(0.28 0.03 200 / 0.05);
-  --shadow-soft: 0 1px 2px oklch(0.28 0.03 200 / 0.04), 0 6px 18px oklch(0.28 0.03 200 / 0.06);
-  --shadow-lift: 0 2px 6px oklch(0.28 0.03 200 / 0.05), 0 16px 40px oklch(0.28 0.03 200 / 0.1);
-  --shadow-float: 0 4px 12px oklch(0.28 0.03 200 / 0.06), 0 28px 60px oklch(0.28 0.03 200 / 0.14);
-  --shadow-glow: 0 0 0 1px oklch(0.475 0.072 192 / 0.08), 0 12px 32px oklch(0.475 0.072 192 / 0.16);
+  /* Warm, wine-tinted shadow palette */
+  --shadow-xs: 0 1px 2px rgba(75, 32, 40, 0.05);
+  --shadow-soft: 0 2px 8px rgba(75, 32, 40, 0.05), 0 1px 2px rgba(75, 32, 40, 0.04);
+  --shadow-lift: 0 8px 24px rgba(75, 32, 40, 0.08), 0 2px 6px rgba(75, 32, 40, 0.04);
+  --shadow-float: 0 20px 50px rgba(75, 32, 40, 0.12), 0 4px 14px rgba(75, 32, 40, 0.06);
+  --shadow-glow: 0 0 0 1px rgba(114, 47, 55, 0.15), 0 8px 30px rgba(114, 47, 55, 0.14);
 
-  /* Soft-neumorphism surfaces — restrained, light + dark tuned via tokens */
-  --neumorph-light: oklch(1 0 0 / 0.9);
-  --neumorph-dark: oklch(0.28 0.03 220 / 0.12);
+  /* Neumorphic tokens */
+  --neumorph-light: rgba(255, 255, 255, 0.9);
+  --neumorph-dark: rgba(75, 32, 40, 0.08);
 }
 
+/* ═══════════════════════════════════════════════════════════
+   LIGHT THEME — "Editorial Warm Ivory & Wine"
+   
+   Design intent: Warm, layered, editorial. NOT white + black.
+   Uses multiple surface tones (ivory, cream, rose-tint, sage-tint)
+   to create visual depth without relying on heavy borders/shadows.
+   ═══════════════════════════════════════════════════════════ */
 :root {
-  --radius: 1rem;
+  --radius: 0.75rem;
   color-scheme: light;
 
-  /* Light Theme — Warm Ivory / Emerald / Lavender / Gold (per DESIGN spec) */
-  --background: #faf8f5; /* Warm Ivory */
-  --foreground: #1f2937; /* Charcoal */
+  /* Core surfaces — note the intentional warmth and variety */
+  --background: #FAF7F2;         /* Warm ivory — main page canvas */
+  --foreground: #2A2226;         /* Deep wine-charcoal — primary text, NOT pure black */
 
-  --card: #ffffff; /* Pure White */
-  --card-foreground: #1f2937;
+  --card: #FFFDF9;               /* Creamy white — elevated card surface */
+  --card-foreground: #2A2226;
 
-  --popover: #ffffff;
-  --popover-foreground: #1f2937;
+  --popover: #FFFDF9;
+  --popover-foreground: #2A2226;
 
-  --primary: #0f766e; /* Deep Emerald */
-  --primary-foreground: #ffffff;
+  /* Brand primary — refined burgundy wine */
+  --primary: #7A2E38;            /* Deep burgundy — main brand, buttons, active states */
+  --primary-foreground: #FFF8F0; /* Warm white on burgundy */
+  --primary-deep: #4B2028;       /* Deep wine — used for emphasis, sidebar */
 
-  --secondary: #84a98c; /* Sage Green */
-  --secondary-foreground: #14302a;
+  /* Secondary surface — warm sand */
+  --secondary: #F0E9E0;          /* Warm linen surface */
+  --secondary-foreground: #4B2028;
 
-  --muted: #f3f1ec; /* Soft Pearl */
-  --muted-foreground: #6b7280; /* Slate */
+  /* Muted surface — soft warm tone */
+  --muted: #EBE5DC;              /* Soft warm muted background */
+  --muted-foreground: #7A6E6F;   /* Warm grey secondary text — NOT cold grey */
 
-  --accent: #b8a8e3; /* Soft Lavender */
-  --accent-foreground: #2e2350;
+  /* Accent — restrained antique gold */
+  --accent: #B89450;             /* Rich antique gold */
+  --accent-foreground: #2C1F0A;
 
-  --destructive: #c0492f;
-  --destructive-foreground: #ffffff;
+  /* Borders — warm and visible */
+  --border: #E2D9CE;             /* Warm border — subtle but present */
+  --input: #E2D9CE;
+  --ring: #7A2E38;
 
-  --success: #0f766e;
-  --success-foreground: #ffffff;
+  /* Rich contextual surfaces — these make the UI feel alive */
+  --rose: #F5E4E6;               /* Soft rose surface for medication/health highlights */
+  --rose-foreground: #5C1D24;
 
-  --warning: #d4a373; /* Warm Gold highlight */
-  --warning-foreground: #4a2f12;
+  --sky: #E3EEF6;                /* Cool sky surface for hydration/info */
+  --sky-foreground: #1A435E;
 
-  --info: #84a98c;
-  --info-foreground: #14302a;
+  --lavender: #EBE4F4;           /* Gentle lavender for AI/assistant areas */
+  --lavender-foreground: #352650;
 
-  --lavender: #b8a8e3;
-  --lavender-foreground: #2e2350;
+  --sage: #E2EDDF;               /* Sage green for success/completion surfaces */
+  --sage-foreground: #1B4D36;
 
-  --gold: #d4a373;
-  --gold-foreground: #4a2f12;
+  --gold: #B89450;
+  --gold-foreground: #2C1F0A;
 
-  --border: #e5e7eb; /* Mist Grey */
-  --input: #e5e7eb;
-  --ring: #0f766e;
+  /* Status colors — warm and purposeful, never alarmist */
+  --destructive: #A42B2B;        /* Warm cherry red */
+  --destructive-foreground: #FFFFFF;
 
-  --chart-1: #0f766e;
-  --chart-2: #84a98c;
-  --chart-3: #d4a373;
-  --chart-4: #b8a8e3;
-  --chart-5: #6b7280;
+  --success: #2B7050;            /* Rich sage green */
+  --success-foreground: #FFFFFF;
 
-  --sidebar: #f3f1ec;
-  --sidebar-foreground: #1f2937;
-  --sidebar-primary: #0f766e;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #ece9e1;
-  --sidebar-accent-foreground: #1f2937;
-  --sidebar-border: #e5e7eb;
-  --sidebar-ring: #0f766e;
+  --warning: #B89450;
+  --warning-foreground: #2C1F0A;
+
+  --info: #2A5A78;
+  --info-foreground: #FFFFFF;
+
+  /* Chart palette — wine, sage, gold, sky, lavender */
+  --chart-1: #7A2E38;
+  --chart-2: #2B7050;
+  --chart-3: #B89450;
+  --chart-4: #4388B8;
+  --chart-5: #8C78A8;
+
+  /* Sidebar / navigation rail — deep wine surface */
+  --sidebar: #4B2028;            /* Deep wine — premium sidebar */
+  --sidebar-foreground: #F5E4E6;
+  --sidebar-primary: #E8868E;    /* Rose accent on dark sidebar */
+  --sidebar-primary-foreground: #280B10;
+  --sidebar-accent: #5A2730;     /* Lighter wine hover */
+  --sidebar-accent-foreground: #F5E4E6;
+  --sidebar-border: #6B3040;
+  --sidebar-ring: #E8868E;
 }
 
+/* ═══════════════════════════════════════════════════════════
+   DARK THEME — "Luxury Obsidian & Rose Wine"
+   
+   Design intent: Deep, warm, sophisticated. NOT grey + white.
+   Uses warm charcoal with wine undertones, rose-gold accents,
+   and carefully layered surfaces for depth without heaviness.
+   ═══════════════════════════════════════════════════════════ */
 .dark {
   color-scheme: dark;
 
-  /* Dark Theme — Rich Graphite / Emerald / Lavender / Gold (per DESIGN spec) */
-  --background: #111827; /* Rich Graphite */
-  --foreground: #f8fafc; /* Soft White */
+  --background: #14100F;         /* Deep warm obsidian — NOT cold grey */
+  --foreground: #F5EDE5;         /* Warm cream text — NOT pure white */
 
-  --card: #273444; /* Charcoal */
-  --card-foreground: #f8fafc;
+  --card: #1E1918;               /* Elevated warm charcoal */
+  --card-foreground: #F5EDE5;
 
-  --popover: #273444;
-  --popover-foreground: #f8fafc;
+  --popover: #1E1918;
+  --popover-foreground: #F5EDE5;
 
-  --primary: #34d399; /* Emerald */
-  --primary-foreground: #06231a;
+  --primary: #E8868E;            /* Rose-wine accent — warm and visible */
+  --primary-foreground: #280B10;
+  --primary-deep: #3B1A1E;       /* Deep wine panel */
 
-  --secondary: #a3be8c; /* Sage */
-  --secondary-foreground: #16210f;
+  --secondary: #2A2424;          /* Warm charcoal secondary surface */
+  --secondary-foreground: #F5EDE5;
 
-  --muted: #1f2937; /* Deep Slate */
-  --muted-foreground: #cbd5e1; /* Cool Grey */
+  --muted: #322A2C;              /* Warm muted surface */
+  --muted-foreground: #A8969A;   /* Warm muted text */
 
-  --accent: #c4b5fd; /* Lavender */
-  --accent-foreground: #1e1640;
+  --accent: #DFC085;             /* Soft antique gold */
+  --accent-foreground: #241A0B;
 
-  --destructive: #f87171;
-  --destructive-foreground: #220606;
+  --border: #3D3234;             /* Warm distinguishable border */
+  --input: #3D3234;
+  --ring: #E8868E;
 
-  --success: #34d399;
-  --success-foreground: #06231a;
+  /* Dark mode contextual surfaces — tinted, not just darker grey */
+  --rose: #2E1A1D;               /* Deep rose tint */
+  --rose-foreground: #F6CCD0;
 
-  --warning: #e9c46a; /* Gold */
-  --warning-foreground: #2e2208;
+  --sky: #162A38;                /* Deep sky tint */
+  --sky-foreground: #CFE2F0;
 
-  --info: #a3be8c;
-  --info-foreground: #16210f;
+  --lavender: #281F36;           /* Deep lavender tint */
+  --lavender-foreground: #E2D9EE;
 
-  --lavender: #c4b5fd;
-  --lavender-foreground: #1e1640;
+  --sage: #162B1F;               /* Deep sage tint */
+  --sage-foreground: #C7E6D4;
 
-  --gold: #e9c46a;
-  --gold-foreground: #2e2208;
+  --gold: #362814;
+  --gold-foreground: #E8D5B5;
 
-  --border: #374151; /* Dark Grey */
-  --input: #374151;
-  --ring: #34d399;
+  --destructive: #F28482;        /* Soft cherry red */
+  --destructive-foreground: #280B10;
 
-  --chart-1: #34d399;
-  --chart-2: #a3be8c;
-  --chart-3: #e9c46a;
-  --chart-4: #c4b5fd;
-  --chart-5: #cbd5e1;
+  --success: #4EBA88;            /* Vibrant sage */
+  --success-foreground: #0A2416;
 
-  --sidebar: #1f2937;
-  --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #34d399;
-  --sidebar-primary-foreground: #06231a;
-  --sidebar-accent: #273444;
-  --sidebar-accent-foreground: #f8fafc;
-  --sidebar-border: #374151;
-  --sidebar-ring: #34d399;
+  --warning: #DFC085;
+  --warning-foreground: #241A0B;
+
+  --info: #6BA8E5;
+  --info-foreground: #0E2235;
+
+  --chart-1: #E8868E;
+  --chart-2: #4EBA88;
+  --chart-3: #DFC085;
+  --chart-4: #6BA8E5;
+  --chart-5: #B8A9D9;
+
+  /* Dark sidebar — deepest surface */
+  --sidebar: #110D0C;
+  --sidebar-foreground: #F5EDE5;
+  --sidebar-primary: #E8868E;
+  --sidebar-primary-foreground: #280B10;
+  --sidebar-accent: #251E1D;
+  --sidebar-accent-foreground: #F5EDE5;
+  --sidebar-border: #3D3234;
+  --sidebar-ring: #E8868E;
+
+  /* Dark mode shadows — cooler with wine undertone */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
+  --shadow-lift: 0 8px 24px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.2);
+  --shadow-float: 0 20px 50px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 0 1px rgba(232, 134, 142, 0.2), 0 8px 30px rgba(0, 0, 0, 0.35);
 }
 
+/* ═══════════════════════════════════════════════════════════
+   BASE LAYER — Typography, selections, scroll
+   ═══════════════════════════════════════════════════════════ */
 @layer base {
   * {
     border-color: var(--color-border);
@@ -238,39 +300,66 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Editorial typography — Fraunces for headings, tight tracking */
   h1,
   h2,
   h3,
   h4 {
-    font-family: var(--font-display);
+    font-family: var(--font-serif);
     font-optical-sizing: auto;
-    letter-spacing: -0.018em;
-    line-height: 1.1;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
   }
 
   h1 {
-    letter-spacing: -0.028em;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
   }
 
+  h2 {
+    letter-spacing: -0.025em;
+  }
+
+  /* Selection highlight — wine tint */
   ::selection {
     background-color: color-mix(in oklab, var(--color-primary) 22%, transparent);
     color: var(--color-foreground);
   }
+
+  /* Scrollbar — subtle, themed */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in oklab, var(--color-muted-foreground) 30%, transparent);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in oklab, var(--color-muted-foreground) 50%, transparent);
+  }
 }
 
-/* Tasteful, contextual glass — used only where it improves usability (bars, overlays) */
+/* ═══════════════════════════════════════════════════════════
+   UTILITY CLASSES
+   ═══════════════════════════════════════════════════════════ */
+
+/* Glass morphism — for sticky bars and overlays */
 @utility glass {
-  background-color: color-mix(in oklab, var(--color-background) 72%, transparent);
-  backdrop-filter: blur(18px) saturate(150%);
-  border-color: color-mix(in oklab, var(--color-border) 70%, transparent);
+  background-color: color-mix(in oklab, var(--color-background) 78%, transparent);
+  backdrop-filter: blur(20px) saturate(160%);
+  border-color: color-mix(in oklab, var(--color-border) 60%, transparent);
 }
 
 @utility glass-card {
-  background-color: color-mix(in oklab, var(--color-card) 80%, transparent);
-  backdrop-filter: blur(20px) saturate(140%);
+  background-color: color-mix(in oklab, var(--color-card) 82%, transparent);
+  backdrop-filter: blur(24px) saturate(140%);
 }
 
-/* Premium depth helpers */
+/* Premium depth shadows */
 @utility shadow-soft {
   box-shadow: var(--shadow-soft);
 }
@@ -284,8 +373,7 @@
   box-shadow: var(--shadow-glow);
 }
 
-/* Restrained soft-neumorphism — for quick actions, FABs, toggles, key widgets.
-   Uses a top inner light + layered outer shadow so it stays elegant in both themes. */
+/* Neumorphic surface — for special widgets */
 @utility neumorph {
   background-image: linear-gradient(
     145deg,
@@ -303,22 +391,61 @@
     inset 0 -1px 0 var(--neumorph-light);
 }
 
-/* Subtle radial wash for hero / feature surfaces */
+/* Radial ambient glow for hero/feature sections */
 @utility surface-glow {
   background-image:
     radial-gradient(
       60% 50% at 15% 0%,
-      color-mix(in oklab, var(--color-primary) 8%, transparent),
+      color-mix(in oklab, var(--color-primary) 10%, transparent),
       transparent 70%
     ),
     radial-gradient(
       50% 45% at 100% 10%,
-      color-mix(in oklab, var(--color-accent) 12%, transparent),
+      color-mix(in oklab, var(--color-accent) 14%, transparent),
       transparent 70%
     );
 }
 
-/* Calm-over-clever motion: subtle, fast, never bouncy. Respects reduced motion. */
+/* Tinted section surfaces — use these for visual variety */
+@utility surface-rose {
+  background-color: var(--color-rose);
+  color: var(--color-rose-foreground);
+}
+
+@utility surface-sky {
+  background-color: var(--color-sky);
+  color: var(--color-sky-foreground);
+}
+
+@utility surface-lavender {
+  background-color: var(--color-lavender);
+  color: var(--color-lavender-foreground);
+}
+
+@utility surface-sage {
+  background-color: var(--color-sage);
+  color: var(--color-sage-foreground);
+}
+
+@utility surface-gold {
+  background-color: var(--color-gold);
+  color: var(--color-gold-foreground);
+}
+
+/* Wine gradient — premium branded surface */
+@utility surface-wine-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-deep) 0%,
+    var(--color-primary) 100%
+  );
+  color: var(--color-primary-foreground);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ANIMATION — Purposeful, smooth, calm
+   ═══════════════════════════════════════════════════════════ */
+
 @utility animate-rise {
   animation: doseloop-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -331,7 +458,7 @@
   animation: doseloop-fade 0.45s ease-out both;
 }
 
-/* Staggered entrance for lists/grids: add data-stagger index inline if desired */
+/* Staggered entrance for lists/grids */
 @utility stagger-children {
   & > * {
     animation: doseloop-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -353,7 +480,7 @@
   }
 }
 
-/* Premium hover lift for interactive cards */
+/* Interactive card hover — subtle lift */
 @utility card-interactive {
   transition:
     transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
@@ -384,8 +511,18 @@
   }
 }
 
-/* Scroll-reveal: elements marked [data-reveal] fade + rise as they enter view.
-   Re-armed on route change by the ScrollReveal hook for smooth feature switching. */
+@keyframes doseloop-pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+}
+
+/* Scroll reveal */
 [data-reveal] {
   opacity: 0;
   transform: translateY(20px);
@@ -398,7 +535,6 @@
   opacity: 1;
   transform: none;
 }
-/* Optional stagger via data-reveal-delay on the element */
 [data-reveal][data-reveal-delay="1"] {
   transition-delay: 0.06s;
 }
@@ -415,7 +551,7 @@
   transition-delay: 0.3s;
 }
 
-/* Smooth, Apple-like tap feedback on interactive controls */
+/* Smooth tap feedback on all interactive controls */
 @layer base {
   button:not(:disabled),
   a[href],
@@ -437,6 +573,7 @@
   }
 }
 
+/* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] {
     opacity: 1 !important;

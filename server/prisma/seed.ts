@@ -304,6 +304,295 @@ async function main() {
     });
   }
   console.log(`Created ${chatMessages.length} chat messages`);
+
+  // -------------------------------------------------------------
+  // Seed Aman (Local Mode user matching usr_aman / local_token_aman)
+  // -------------------------------------------------------------
+  const aman = await prisma.user.upsert({
+    where: { id: 'usr_aman' },
+    update: {},
+    create: {
+      id: 'usr_aman',
+      email: 'aman@doseloop.com',
+      firstName: 'Aman',
+      lastName: 'Kumar',
+      role: 'ADMIN',
+      plan: 'pro',
+    },
+  });
+  console.log(`Created local user: ${aman.email} (${aman.id})`);
+
+  const amanMeds = [
+    {
+      id: 'med_aman_1',
+      name: 'Metformin',
+      dosage: '500mg',
+      form: 'PILL' as const,
+      critical: true,
+      color: '#3B82F6',
+      notes: 'Take with food to reduce stomach upset',
+      refillIn: 12,
+      userId: aman.id,
+      schedule: { time: '08:00', frequency: 'twice daily' },
+    },
+    {
+      id: 'med_aman_2',
+      name: 'Vitamin D3',
+      dosage: '2000 IU',
+      form: 'PILL' as const,
+      critical: false,
+      color: '#F59E0B',
+      notes: 'Morning with breakfast',
+      refillIn: 25,
+      userId: aman.id,
+      schedule: { time: '09:00', frequency: 'daily' },
+    },
+    {
+      id: 'med_aman_3',
+      name: 'Omega-3 Fish Oil',
+      dosage: '1000mg',
+      form: 'PILL' as const,
+      critical: false,
+      color: '#10B981',
+      notes: 'Night after dinner',
+      refillIn: 18,
+      userId: aman.id,
+      schedule: { time: '21:00', frequency: 'daily' },
+    },
+  ];
+
+  for (const med of amanMeds) {
+    const { schedule, ...medData } = med;
+    await prisma.medication.upsert({
+      where: { id: med.id },
+      update: {},
+      create: {
+        ...medData,
+        schedules: { create: [schedule] },
+      },
+    });
+
+    // Create upcoming and taken dose events for Aman
+    await prisma.doseEvent.createMany({
+      data: [
+        {
+          medicationId: med.id,
+          scheduledFor: new Date(),
+          status: 'TAKEN',
+          takenAt: new Date(),
+        },
+        {
+          medicationId: med.id,
+          scheduledFor: new Date(Date.now() + 4 * 60 * 60 * 1000),
+          status: 'UPCOMING',
+        },
+      ],
+      skipDuplicates: true,
+    });
+  }
+
+  // Family members for Aman
+  const amanFamily = [
+    {
+      id: 'fam_aman_1',
+      name: 'Priya Sharma',
+      relation: 'Sister',
+      role: 'OWNER' as const,
+      sharesMedication: true,
+      sharesWellness: true,
+      userId: aman.id,
+    },
+    {
+      id: 'fam_aman_2',
+      name: 'Rajesh Kumar',
+      relation: 'Father',
+      role: 'CONNECTED' as const,
+      sharesMedication: true,
+      sharesWellness: false,
+      userId: aman.id,
+    },
+  ];
+
+  for (const fm of amanFamily) {
+    await prisma.familyMember.upsert({
+      where: { id: fm.id },
+      update: {},
+      create: fm,
+    });
+  }
+
+  // Emergency contact for Aman
+  await prisma.emergencyContact.upsert({
+    where: { id: 'emg_aman_1' },
+    update: {},
+    create: {
+      id: 'emg_aman_1',
+      name: 'Priya Sharma',
+      relation: 'Sister',
+      phone: '+91 98765 43210',
+      email: 'priya@example.com',
+      isPrimary: true,
+      userId: aman.id,
+    },
+  });
+
+  // Notifications for Aman
+  await prisma.notification.upsert({
+    where: { id: 'notif_aman_1' },
+    update: {},
+    create: {
+      id: 'notif_aman_1',
+      title: 'Afternoon Dose Reminder',
+      body: 'Time to take Vitamin D3 (2000 IU)',
+      type: 'REMINDER' as const,
+      isRead: false,
+      userId: aman.id,
+    },
+  });
+
+  console.log('Successfully seeded complete datasets for Aman (usr_aman)');
+
+  // -------------------------------------------------------------
+  // Seed Realistic QA Identity: Aarav Sharma (Database generated UUID)
+  // -------------------------------------------------------------
+  const aarav = await prisma.user.upsert({
+    where: { email: 'qa.aarav.sharma@example.com' },
+    update: {},
+    create: {
+      email: 'qa.aarav.sharma@example.com',
+      firstName: 'Aarav',
+      lastName: 'Sharma',
+      role: 'USER',
+      plan: 'pro',
+    },
+  });
+  console.log(`Created realistic QA user: ${aarav.firstName} ${aarav.lastName} (${aarav.email}) -> ID: ${aarav.id}`);
+
+  const aaravMeds = [
+    {
+      id: 'med_aarav_1',
+      name: 'Atorvastatin',
+      dosage: '20mg',
+      form: 'PILL' as const,
+      critical: true,
+      color: '#0f766e',
+      notes: 'Take at bedtime for cholesterol management',
+      refillIn: 20,
+      userId: aarav.id,
+      schedule: { time: '21:00', frequency: 'daily' },
+    },
+    {
+      id: 'med_aarav_2',
+      name: 'Metformin',
+      dosage: '500mg',
+      form: 'PILL' as const,
+      critical: true,
+      color: '#3B82F6',
+      notes: 'Take with lunch to avoid gastric upset',
+      refillIn: 15,
+      userId: aarav.id,
+      schedule: { time: '13:00', frequency: 'daily' },
+    },
+    {
+      id: 'med_aarav_3',
+      name: 'CoQ10',
+      dosage: '100mg',
+      form: 'PILL' as const,
+      critical: false,
+      color: '#d4a373',
+      notes: 'Morning supplement with healthy fats',
+      refillIn: 28,
+      userId: aarav.id,
+      schedule: { time: '08:30', frequency: 'daily' },
+    },
+  ];
+
+  for (const med of aaravMeds) {
+    const { schedule, ...medData } = med;
+    await prisma.medication.upsert({
+      where: { id: med.id },
+      update: {},
+      create: {
+        ...medData,
+        schedules: { create: [schedule] },
+      },
+    });
+
+    await prisma.doseEvent.createMany({
+      data: [
+        {
+          medicationId: med.id,
+          scheduledFor: new Date(),
+          status: 'TAKEN',
+          takenAt: new Date(),
+        },
+        {
+          medicationId: med.id,
+          scheduledFor: new Date(Date.now() + 5 * 60 * 60 * 1000),
+          status: 'UPCOMING',
+        },
+      ],
+      skipDuplicates: true,
+    });
+  }
+
+  const aaravFamily = [
+    {
+      id: 'fam_aarav_1',
+      name: 'Meera Sharma',
+      relation: 'Spouse',
+      role: 'OWNER' as const,
+      sharesMedication: true,
+      sharesWellness: true,
+      userId: aarav.id,
+    },
+    {
+      id: 'fam_aarav_2',
+      name: 'Kabir Sharma',
+      relation: 'Son',
+      role: 'VIEWER' as const,
+      sharesMedication: true,
+      sharesWellness: false,
+      userId: aarav.id,
+    },
+  ];
+
+  for (const fm of aaravFamily) {
+    await prisma.familyMember.upsert({
+      where: { id: fm.id },
+      update: {},
+      create: fm,
+    });
+  }
+
+  await prisma.emergencyContact.upsert({
+    where: { id: 'emg_aarav_1' },
+    update: {},
+    create: {
+      id: 'emg_aarav_1',
+      name: 'Meera Sharma',
+      relation: 'Spouse',
+      phone: '+91 98111 22334',
+      email: 'meera.sharma@example.com',
+      isPrimary: true,
+      userId: aarav.id,
+    },
+  });
+
+  await prisma.notification.upsert({
+    where: { id: 'notif_aarav_1' },
+    update: {},
+    create: {
+      id: 'notif_aarav_1',
+      title: 'Evening Atorvastatin',
+      body: 'Time to take Atorvastatin (20mg) before sleep',
+      type: 'REMINDER' as const,
+      isRead: false,
+      userId: aarav.id,
+    },
+  });
+
+  console.log(`Successfully seeded QA identity: Aarav Sharma (${aarav.id})`);
 }
 
 main()

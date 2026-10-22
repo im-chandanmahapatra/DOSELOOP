@@ -8,10 +8,17 @@
   },
   "scripts": {
     "postinstall": "prisma generate",
+    "prisma:generate": "prisma generate",
     "vercel-build": "npx prisma generate",
     "dev": "tsx watch src/server.ts",
     "build": "tsc && tsc-alias",
+    "type-check": "tsc --noEmit",
     "lint": "eslint src",
+    "test": "tsx --test test/**/*.test.ts",
+    "test:speech": "tsx --test ../client/test/speech.test.ts",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:studio": "prisma studio",
     "start": "node dist/server.js"
   },
   "keywords": [],
@@ -51,5 +58,8 @@
     "tsx": "^4.22.4",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.62.1"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }

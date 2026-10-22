@@ -101,25 +101,52 @@ DoseLoop uses Prisma ORM to interact with PostgreSQL.
 
 ## Running the Application
 
-### Running Server
+### One-Command Local Development (Recommended)
 
-From the root directory:
+DoseLoop 2.0 provides an automated root-level workflow:
+
 ```bash
-cd server
-npm install
+# 1. (If using local Postgres) Start the local database in a separate terminal:
+npm run db:start
+
+# 2. Push schema & seed local data (once):
+npm run db:push
+npm run db:seed
+
+# 3. Launch both Frontend and Backend concurrently:
 npm run dev
 ```
-The server will start at `http://localhost:5000`.
 
-### Running Client
+- **Frontend Client:** `http://localhost:5173`
+- **Backend API:** `http://localhost:5000` (API routes under `/api/v1`)
+- **Health Check:** `http://localhost:5000/health` (Liveness) & `http://localhost:5000/health/ready` (Readiness)
+- **Shutdown:** Press `Ctrl + C` in the terminal to cleanly terminate both concurrently managed services.
 
-Open a new terminal from the root directory:
-```bash
-cd client
-npm install
-npm run dev
-```
-The client will start at `http://localhost:5173`.
+### Local QA Testing Identity
+
+For instant local development and end-to-end verification without requiring external Supabase cloud availability:
+- **Name:** Aarav Sharma
+- **Email:** `qa.aarav.sharma@example.com`
+- **User ID:** `c55cdea5-b183-4127-bcb4-100cf11c08e0`
+- **Instant Sign-in:** On the `/auth` screen, an "Instant Demo Sign-in" button is available in local development mode to log in immediately with this identity and access all dashboard, medication, and AI assistant features.
+
+### Quality & Verification Commands
+
+- `npm run test`: Executes the Node.js 22 native test runner against HTTP health & readiness APIs.
+- `npm run type-check`: Verifies full TypeScript compilation across client and server with zero errors.
+- `npm run build`: Compiles production assets for both Vite client and TypeScript server.
+- `npm run db:studio`: Launches Prisma Studio on `http://localhost:5555` for visual database inspection.
+
+### Architecture Documentation
+
+Comprehensive architecture, design, and operational documentation is organized in [`docs/`](docs/README.md):
+- [**Project Bible (`docs/architecture/PROJECT_BIBLE.md`)**](docs/architecture/PROJECT_BIBLE.md): Master System Architecture, Product Requirements Document (PRD), and Data Models.
+- [**Project Audit (`docs/architecture/PROJECT_AUDIT.md`)**](docs/architecture/PROJECT_AUDIT.md): Complete architecture discovery, baseline status, and modernization log.
+- [**Design System (`docs/architecture/DESIGN_SYSTEM.md`)**](docs/architecture/DESIGN_SYSTEM.md): Visual design language, semantic color tokens, typography scales, and micro-interactions.
+- [**UI Redesign Plan (`docs/plans/UI_REDESIGN_PLAN.md`)**](docs/plans/UI_REDESIGN_PLAN.md): 6-phase implementation roadmap for the quiet premium interface.
+- [**AI Diagnostics (`docs/operations/AI_DIAGNOSTICS.md`)**](docs/operations/AI_DIAGNOSTICS.md): Groq AI integration diagnostics, active model verification, and failover runbook.
+- [**Vercel Deployment (`docs/operations/VERCEL_DEPLOYMENT.md`)**](docs/operations/VERCEL_DEPLOYMENT.md): Step-by-step production deployment handbook for Vercel Serverless.
+- [**Browser Voice R&D (`docs/research/doseloop-browser-voice-r-and-d.md`)**](docs/research/doseloop-browser-voice-r-and-d.md): In-depth research, browser compatibility matrix, and implementation report for browser-native STT and TTS.
 
 ## Production Deployment (Vercel Serverless)
 
@@ -146,22 +173,42 @@ To enable medication reminders:
 2. Ensure you have added a `vercel.json` crons block (or configure it in the dashboard) to ping `/api/v1/cron/reminders` every minute.
 3. Vercel will send a `Bearer` token matching your `CRON_SECRET` to execute the reminders safely.
 
-## Folder Structure
+## Repository Structure
 
 ```
 DOSELOOP/
-├── client/                 # Frontend React Application
+├── api/                    # Vercel serverless function entrypoint
+│   └── index.js
+├── client/                 # Frontend React 19 Application (Vite 8 + Tailwind v4)
 │   ├── public/             # Static public assets
-│   ├── src/                # React source code (components, routes, lib)
-│   └── package.json        # Client dependencies
-├── server/                 # Backend Node.js/Express Application
-│   ├── prisma/             # Database schema and migrations
-│   ├── src/                # Express source code (controllers, services)
-│   └── package.json        # Server dependencies
-├── docs/                   # Additional documentation
-├── .gitignore              # Production-grade Git ignore rules
-├── README.md               # This file
-└── LICENSE                 # MIT License
+│   ├── src/                # Application source code
+│   │   ├── components/     # Atomic UI, AppShell, and Brand components
+│   │   ├── hooks/          # Custom React hooks (Mobile, Voice STT/TTS)
+│   │   ├── lib/            # Utilities (API fetcher, Analytics, Speech)
+│   │   ├── providers/      # Context providers (AuthProvider)
+│   │   ├── routes/         # TanStack file-based routes
+│   │   └── styles.css      # Design system CSS tokens
+│   ├── test/               # Client unit tests (Speech phonetics & chunking)
+│   └── package.json
+├── server/                 # Backend Node.js / Express 5 Application
+│   ├── prisma/             # Schema, migrations, RLS policies, seeders
+│   ├── src/                # Domain-driven modular backend
+│   │   ├── config/         # Environment, Logger config
+│   │   ├── middlewares/    # Auth, Validation, Error middlewares
+│   │   ├── modules/        # Domain modules (assistant, medications, etc.)
+│   │   └── server.ts       # Express server initialization
+│   ├── test/               # Server API health & integration tests
+│   └── package.json
+├── docs/                   # Documentation Hub
+│   ├── README.md           # Master documentation index
+│   ├── architecture/       # System specifications, Project Bible, Design System
+│   ├── operations/         # Deployment runbooks and AI diagnostics
+│   ├── plans/              # Product and UI redesign roadmaps
+│   └── research/           # Deep-dive research papers and R&D reports
+├── TASK.md                 # Active sprint task tracking ledger
+├── package.json            # Monorepo workspaces configuration
+├── vercel.json             # Vercel deployment & serverless routing config
+└── README.md               # Primary project overview
 ```
 
 ## Screenshots

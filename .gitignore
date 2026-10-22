@@ -78,6 +78,7 @@ web_modules/
 .env.production
 .env.local
 .env.*
+!.env.example
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -104,3 +105,16 @@ build
 !.vscode/launch.json
 !.vscode/extensions.json
 .idea/
+
+# Platform & cache artifacts
+.tanstack/
+.lovable/
+.wrangler/
+bun.lock
+bunfig.toml
+pnpm-lock.yaml
+pnpm-workspace.yaml
+
+# Docker (no longer used in this project)
+docker-compose.yml
+Dockerfile

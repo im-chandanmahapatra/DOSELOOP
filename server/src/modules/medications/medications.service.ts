@@ -70,10 +70,10 @@ export const createMedication = async (
   });
 };
 
-export const getMedications = async (userId: string, page: number, limit: number) => {
-  limit = Math.max(1, Math.min(limit, 100));
-  page = Math.max(1, page);
-  const skip = (page - 1) * limit;
+export const getMedications = async (userId: string, page = 1, limit = 50) => {
+  const safeLimit = Number.isFinite(limit) ? Math.max(1, Math.min(limit, 100)) : 50;
+  const safePage = Number.isFinite(page) ? Math.max(1, page) : 1;
+  const skip = (safePage - 1) * safeLimit;
 
   const [totalCount, meds] = await Promise.all([
     prisma.medication.count({ where: { userId } }),
@@ -81,7 +81,7 @@ export const getMedications = async (userId: string, page: number, limit: number
       where: { userId },
       include: { schedules: true },
       skip,
-      take: limit,
+      take: safeLimit,
       orderBy: { createdAt: 'desc' },
     }),
   ]);

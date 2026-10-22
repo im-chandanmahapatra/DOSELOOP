@@ -36,10 +36,10 @@ const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions' as const;
 
 /**
  * Model selection.
- * llama-3.3-70b-versatile is Groq's highest-quality generally available model.
- * Swap to a smaller model (llama3-8b-8192) if you need lower latency or cost.
+ * Defaults to qwen/qwen3.8-27b (available on the active Groq key).
+ * Configurable via GROQ_MODEL in environment.
  */
-const MODEL = 'llama-3.3-70b-versatile' as const;
+const MODEL = env.GROQ_MODEL || 'qwen/qwen3.8-27b';
 
 /** Hard timeout per individual HTTP request attempt (ms). */
 const REQUEST_TIMEOUT_MS = 15_000;
@@ -314,46 +314,58 @@ async function fetchChatCompletion(
  * than throwing — the server stays up and the user gets a helpful explanation.
  */
 export const chatCompletion = async (userId: string, message: string): Promise<ChatResponse> => {
-  // ── 1. Resolve or create conversation ────────────────────────────────────
-  let conversation = await prisma.assistantConversation.findFirst({
-    where: { userId },
-    orderBy: { createdAt: 'desc' }, // use the most recent conversation
-  });
+  let conversationId = `conv_${Date.now()}`;
+  let contextMessages: GroqMessage[] = [SYSTEM_PROMPT, { role: 'user', content: message }];
+  let dbAvailable = true;
 
-  if (!conversation) {
-    conversation = await prisma.assistantConversation.create({
-      data: { userId },
+  // ── 1. Resolve or create conversation in DB if accessible ────────────────
+  try {
+    let conversation = await prisma.assistantConversation.findFirst({
+      where: { userId },
+      orderBy: { createdAt: 'desc' }, // use the most recent conversation
     });
-    logger.info(`[assistant] Created new conversation ${conversation.id} for user ${userId}`);
+
+    if (!conversation) {
+      conversation = await prisma.assistantConversation.create({
+        data: { userId },
+      });
+      logger.info(`[assistant] Created new conversation ${conversation.id} for user ${userId}`);
+    }
+    conversationId = conversation.id;
+
+    // ── 2. Persist the incoming user message ───────────────────────────────
+    await prisma.assistantMessage.create({
+      data: {
+        conversationId,
+        role: 'USER',
+        content: message,
+      },
+    });
+
+    // ── 3. Build conversation context (most recent N messages) ─────────────
+    const recentMessages = await prisma.assistantMessage.findMany({
+      where: { conversationId },
+      orderBy: { createdAt: 'desc' },
+      take: HISTORY_CONTEXT_LIMIT,
+      select: { role: true, content: true },
+    });
+
+    contextMessages = [
+      SYSTEM_PROMPT,
+      // Reverse so messages are chronological (oldest → newest)
+      ...recentMessages.reverse().map(
+        (msg): GroqMessage => ({
+          role: msg.role === 'USER' ? 'user' : 'assistant',
+          content: msg.content,
+        }),
+      ),
+    ];
+  } catch (dbErr) {
+    dbAvailable = false;
+    logger.warn('[assistant] Database offline for conversation history; continuing in direct-AI mode', {
+      err: dbErr instanceof Error ? dbErr.message : String(dbErr),
+    });
   }
-
-  // ── 2. Persist the incoming user message ─────────────────────────────────
-  await prisma.assistantMessage.create({
-    data: {
-      conversationId: conversation.id,
-      role: 'USER',
-      content: message,
-    },
-  });
-
-  // ── 3. Build conversation context (most recent N messages) ───────────────
-  const recentMessages = await prisma.assistantMessage.findMany({
-    where: { conversationId: conversation.id },
-    orderBy: { createdAt: 'desc' },
-    take: HISTORY_CONTEXT_LIMIT,
-    select: { role: true, content: true },
-  });
-
-  const contextMessages: GroqMessage[] = [
-    SYSTEM_PROMPT,
-    // Reverse so messages are chronological (oldest → newest)
-    ...recentMessages.reverse().map(
-      (msg): GroqMessage => ({
-        role: msg.role === 'USER' ? 'user' : 'assistant',
-        content: msg.content,
-      }),
-    ),
-  ];
 
   // ── 4. Call Groq (with retry/fallback) ───────────────────────────────────
   let replyText = FALLBACK_MESSAGES.missingKey;
@@ -377,7 +389,7 @@ export const chatCompletion = async (userId: string, message: string): Promise<C
       usage = groqResponse.usage;
 
       logger.info('[assistant] Groq chat completion succeeded', {
-        conversationId: conversation.id,
+        conversationId,
         model: groqResponse.model,
         finishReason: choice.finish_reason,
         totalTokens: groqResponse.usage?.total_tokens,
@@ -397,13 +409,13 @@ export const chatCompletion = async (userId: string, message: string): Promise<C
     ) {
       const svcErr = err as GroqServiceError;
       logger.error(`[assistant] Groq service error (${svcErr.kind}): ${svcErr.message}`, {
-        conversationId: conversation.id,
+        conversationId,
         kind: svcErr.kind,
         statusCode: svcErr.statusCode,
       });
     } else {
       logger.error('[assistant] Unexpected error during Groq chat completion', {
-        conversationId: conversation.id,
+        conversationId,
         err: err instanceof Error ? err.message : String(err),
       });
     }
@@ -411,18 +423,24 @@ export const chatCompletion = async (userId: string, message: string): Promise<C
     replyText = FALLBACK_MESSAGES.serviceError;
   }
 
-  // ── 5. Persist the assistant reply ───────────────────────────────────────
-  await prisma.assistantMessage.create({
-    data: {
-      conversationId: conversation.id,
-      role: 'ASSISTANT',
-      content: replyText,
-    },
-  });
+  // ── 5. Persist the assistant reply if DB available ───────────────────────
+  if (dbAvailable) {
+    try {
+      await prisma.assistantMessage.create({
+        data: {
+          conversationId,
+          role: 'ASSISTANT',
+          content: replyText,
+        },
+      });
+    } catch (saveErr) {
+      logger.warn('[assistant] Failed to persist assistant reply in DB', { saveErr });
+    }
+  }
 
   return {
     message: replyText,
-    conversationId: conversation.id,
+    conversationId,
     fromApi,
     usage,
   };
@@ -430,28 +448,32 @@ export const chatCompletion = async (userId: string, message: string): Promise<C
 
 /**
  * Returns the full chronological message history for a user's most recent
- * conversation, or an empty array if no conversation exists yet.
+ * conversation, or an empty array if no conversation exists yet or DB offline.
  */
 export const getHistory = async (userId: string): Promise<HistoryItem[]> => {
-  const conversation = await prisma.assistantConversation.findFirst({
-    where: { userId },
-    orderBy: { createdAt: 'desc' },
-  });
+  try {
+    const conversation = await prisma.assistantConversation.findFirst({
+      where: { userId },
+      orderBy: { createdAt: 'desc' },
+    });
 
-  if (!conversation) return [];
+    if (!conversation) return [];
 
-  const messages = await prisma.assistantMessage.findMany({
-    where: { conversationId: conversation.id },
-    orderBy: { createdAt: 'asc' },
-    select: { id: true, role: true, content: true, createdAt: true },
-  });
+    const messages = await prisma.assistantMessage.findMany({
+      where: { conversationId: conversation.id },
+      orderBy: { createdAt: 'asc' },
+      select: { id: true, role: true, content: true, createdAt: true },
+    });
 
-  return messages.map((msg): HistoryItem => ({
-    id: msg.id,
-    role: msg.role,
-    content: msg.content,
-    createdAt: msg.createdAt,
-  }));
+    return messages.map((msg): HistoryItem => ({
+      id: msg.id,
+      role: msg.role,
+      content: msg.content,
+      createdAt: msg.createdAt,
+    }));
+  } catch {
+    return [];
+  }
 };
 
 /**

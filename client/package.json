@@ -8,6 +8,7 @@
     "build": "vite build",
     "vercel-build": "vite build",
     "preview": "vite preview",
+    "type-check": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write ."
   },

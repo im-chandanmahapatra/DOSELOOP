@@ -91,7 +91,7 @@ app.use(
 app.use((_req, res, next) => {
   res.setHeader(
     'Permissions-Policy',
-    'camera=(), microphone=(), geolocation=(self), payment=()',
+    'camera=(), microphone=(self), geolocation=(self), payment=()',
   );
   next();
 });
@@ -145,6 +145,7 @@ app.use(
 // Health — MUST be before the general rate limiter so monitoring
 // agents, container orchestrators, and load balancers are never throttled.
 // ---------------------------------------------------------------------------
+app.use('/health', healthRoutes);
 app.use('/api/v1/health', healthRoutes);
 
 // ---------------------------------------------------------------------------
